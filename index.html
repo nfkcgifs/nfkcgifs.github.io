@@ -43,6 +43,109 @@
     </style>
 </head>
 <body>
+
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Windows 95 Taskbar</title>
+  <style>
+    /* Basic Styling for Body */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #c0c0c0; /* Light gray background like Windows 95 */
+    }
+
+    /* Taskbar Container */
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #2f4f4f; /* Dark gray like Windows 95 taskbar */
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+      box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Start Button (like Windows 95 Start button) */
+    .start-button {
+      background-color: #00008b; /* Dark blue */
+      color: white;
+      font-size: 14px;
+      padding: 5px 15px;
+      border-radius: 3px;
+      cursor: pointer;
+      box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.4), inset -1px -1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Taskbar Icons */
+    .task-icons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .task-icon {
+      width: 30px;
+      height: 30px;
+      background-color: #c0c0c0;
+      border: 2px solid #808080;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #333;
+      cursor: pointer;
+      box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.6), inset -1px -1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .task-icon:hover {
+      background-color: #ff8c00;
+      color: white;
+    }
+
+    /* Links (for taskbar navigation) */
+    .task-icon a {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Your Website Content Goes Here -->
+  <div style="padding: 20px;">
+    <h1>Welcome to My Website</h1>
+    <p>Click the icons in the taskbar to navigate to other pages on the site.</p>
+  </div>
+
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <!-- Start Button -->
+    <div class="start-button">Start</div>
+
+    <!-- Taskbar Icons for Navigation -->
+    <div class="task-icons">
+      <div class="task-icon"><a href="page1.html" title="Page 1">1</a></div>
+      <div class="task-icon"><a href="page2.html" title="Page 2">2</a></div>
+      <div class="task-icon"><a href="page3.html" title="Page 3">3</a></div>
+      <div class="task-icon"><a href="page4.html" title="Page 4">4</a></div>
+    </div>
+  </div>
+
+</body>
+</html>
+
+
+	
     <div class="message">
         <h1>Under Construction</h1>
         <p>This website is going under some heavy construction right now so don't expect much.</p>
