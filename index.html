@@ -56,7 +56,8 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background-color: #c0c0c0; /* Light gray background like Windows 95 */
+      background-color: white; /* Remove the gray background */
+      font-family: 'Arial', sans-serif;
     }
 
     /* Taskbar Container */
@@ -65,24 +66,25 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      background-color: #2f4f4f; /* Dark gray like Windows 95 taskbar */
+      background-color: #008080; /* Windows 95 Taskbar Color */
       height: 40px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
       padding: 0 10px;
-      box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.3);
     }
 
     /* Start Button (like Windows 95 Start button) */
     .start-button {
-      background-color: #00008b; /* Dark blue */
+      background-color: #00008b; /* Dark blue for the Start button */
       color: white;
       font-size: 14px;
       padding: 5px 15px;
+      border: 2px solid #00008b;
       border-radius: 3px;
       cursor: pointer;
-      box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.4), inset -1px -1px 3px rgba(0, 0, 0, 0.2);
+      box-shadow: inset 1px 1px 5px rgba(255, 255, 255, 0.5), inset -1px -1px 5px rgba(0, 0, 0, 0.5);
+      text-align: center;
     }
 
     /* Start Menu */
@@ -91,11 +93,24 @@
       position: absolute;
       bottom: 50px; /* Position above the taskbar */
       left: 10px;
-      background-color: #2f4f4f;
-      border: 2px solid #808080;
+      background-color: #2f4f4f; /* Dark greenish background */
+      border: 2px solid #808080; /* Light gray border */
       padding: 10px;
       width: 200px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      font-size: 12px;
+    }
+
+    /* Menu Header */
+    .start-menu-header {
+      background-color: #00008b;
+      color: white;
+      padding: 5px 10px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 5px;
+      border-radius: 3px;
+      box-shadow: inset 1px 1px 5px rgba(255, 255, 255, 0.5), inset -1px -1px 5px rgba(0, 0, 0, 0.5);
     }
 
     /* Menu Links */
@@ -103,16 +118,17 @@
       display: block;
       color: white;
       text-decoration: none;
-      padding: 8px 5px;
+      padding: 6px 10px;
+      margin: 3px 0;
       border-radius: 3px;
-      margin-bottom: 5px;
       background-color: #4f4f4f;
+      box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.3), inset -1px -1px 3px rgba(0, 0, 0, 0.3);
     }
 
     .start-menu a:hover {
       background-color: #ff8c00;
-      color: white;
     }
+
   </style>
 </head>
 <body>
@@ -125,6 +141,7 @@
 
   <!-- Start Menu -->
   <div class="start-menu" id="startMenu">
+    <div class="start-menu-header">Start Menu</div>
     <a href="page1.html">Page 1</a>
     <a href="page2.html">Page 2</a>
     <a href="page3.html">Page 3</a>
@@ -151,9 +168,6 @@
 </body>
 </html>
 
-
-</body>
-</html>
 
 
 	
