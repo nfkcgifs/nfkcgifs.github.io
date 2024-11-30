@@ -1,6 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+
+    /* Taskbar Container */
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #008080; /* Windows 95 Taskbar Color */
+      background-color: #2f4f4f; /* Windows 95 Taskbar Color */
+      height: 40px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Start Button (like Windows 95 Start button) */
+    .start-button {
+      background-color: #00008b; /* Dark blue for the Start button */
+      background: linear-gradient(to bottom, #00008b 5%, #000066 100%); /* Dark blue gradient */
+      color: white;
+      font-size: 14px;
+      padding: 5px 15px;
+      padding: 6px 20px;
+      border: 2px solid #00008b;
+      border-radius: 3px;
+      cursor: pointer;
+      box-shadow: inset 1px 1px 5px rgba(255, 255, 255, 0.5), inset -1px -1px 5px rgba(0, 0, 0, 0.5);
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), inset 1px 1px 2px rgba(255, 255, 255, 0.4);
+      text-align: center;
+    }
+
+    /* Start Menu */
+    .start-menu {
+      display: none; /* Initially hidden */
+      position: absolute;
+      bottom: 50px; /* Position above the taskbar */
+      left: 10px;
+      background-color: #2f4f4f; /* Dark greenish background */
+      border: 2px solid #808080; /* Light gray border */
+      background-color: #c0c0c0; /* Light gray background */
+      border: 2px solid #808080; /* Gray border */
+      padding: 10px;
+      width: 200px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+      font-size: 12px;
+      z-index: 100;
+    }
+
+    /* Menu Header */
+    /* Menu Header (Windows 95 Start Menu header) */
+    .start-menu-header {
+      background-color: #00008b;
+      color: white;
+      padding: 5px 10px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 5px;
+      border: 1px solid #808080;
+      border-radius: 3px;
+      box-shadow: inset 1px 1px 5px rgba(255, 255, 255, 0.5), inset -1px -1px 5px rgba(0, 0, 0, 0.5);
+      margin-bottom: 5px;
+      box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Menu Links */
+    /* Menu Links (Button-like links inside the menu) */
+    .start-menu a {
+      display: block;
+      color: white;
+      color: black;
+      text-decoration: none;
+      padding: 6px 10px;
+      margin: 3px 0;
+      margin: 2px 0;
+      border-radius: 3px;
+      background-color: #4f4f4f;
+      box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.3), inset -1px -1px 3px rgba(0, 0, 0, 0.3);
+      background-color: #e4e4e4; /* Light gray background for menu items */
+      box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .start-menu a:hover {
+      background-color: #ff8c00;
+      color: white;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <!-- Start Button -->
+    <div class="start-button" onclick="toggleMenu()">Start</div>
+  </div>
+
+  <!-- Start Menu -->
+  <div class="start-menu" id="startMenu">
+    <div class="start-menu-header">Windows 95</div>
+    <a href="https://nfkcgifs.github.io/html/about.html">About Me!</a>
+    <a href="https://nfkcgifs.github.io/html/minecraft.html">Minecraft Stuff</a>
+    <a href="https://nfkcgifs.github.io/html/photography.html">Photography</a>
+    <a href="https://nfkcgifs.github.io/html/socials.html">Socials</a>
+  </div>
+
+  <script>
+    // Function to toggle the visibility of the Start menu
+    function toggleMenu() {
+      const menu = document.getElementById('startMenu');
+      menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
+    }
+
+    // Close the Start menu if clicked outside of it
+    document.addEventListener('click', function(event) {
+      const menu = document.getElementById('startMenu');
+      const startButton = document.querySelector('.start-button');
+      if (!menu.contains(event.target) && event.target !== startButton) {
+        menu.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photography</title>
