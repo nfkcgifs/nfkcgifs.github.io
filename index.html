@@ -211,22 +211,33 @@
       <p>my email which i use for nothing which i can check my emails from is "savmuncher88@gmail.com"</p>
   </section>
 
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Player with Visualizer</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background-color: #121212;
+      background-color: #1a1a1a;
       color: #f7f7f7;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: flex-start;
-      height: 100vh;
-      margin: 0;
-      padding: 20px;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     .container {
       display: flex;
+      flex-direction: row;
       gap: 20px;
       align-items: flex-start;
     }
@@ -236,9 +247,9 @@
       padding: 20px;
       border-radius: 8px;
       width: 300px;
-      text-align: center;
       color: white;
       border: 2px solid #444444;
+      text-align: center;
     }
 
     .music-player .controls {
@@ -295,7 +306,22 @@
       background-color: #555555;
     }
 
-    .visualizer {
+    .loop-button {
+      background-color: #d8b3e6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+
+    .loop-button.active {
+      background-color: #6a4c9c;
+    }
+
+    #visualizer {
       font-family: "Courier New", monospace;
       font-size: 1.5em;
       color: #6a4c9c;
@@ -320,9 +346,8 @@
   </style>
 </head>
 <body>
-  <h1>Music Player with Visualizer</h1>
   <div class="container">
-    <!-- Music Player -->
+    <!-- Music Player Section -->
     <div class="music-player">
       <audio id="audio-player">
         <source id="audio-source" src="music/song1.mp3" type="audio/mp3">
@@ -335,110 +360,129 @@
       </div>
       <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
       <ul id="playlist"></ul>
+      <button class="loop-button" id="loopBtn">Loop: Off</button>
     </div>
 
-    <!-- Visualizer -->
-    <div class="visualizer" id="visualizer"></div>
+    <!-- Visualizer Section -->
+    <div id="visualizer"></div>
   </div>
 
   <script>
-    const audio = document.getElementById('audio-player');
-    const playBtn = document.getElementById('playBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const volumeControl = document.getElementById('volumeControl');
-    const playlistContainer = document.getElementById('playlist');
-    const visualizer = document.getElementById('visualizer');
+    const audio = document.getElementById("audio-player");
+    const playBtn = document.getElementById("playBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const volumeControl = document.getElementById("volumeControl");
+    const playlistContainer = document.getElementById("playlist");
+    const loopBtn = document.getElementById("loopBtn");
+    const visualizer = document.getElementById("visualizer");
 
     const songs = [
-      { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
-      { title: 'Song 2', src: 'music/song2.mp3' },
-      { title: 'Song 3', src: 'music/song3.mp3' },
+      { title: "Like Him - Tyler the Creator", src: "music/song1.mp3" },
+      { title: "Song 2", src: "music/song2.mp3" },
+      { title: "Song 3", src: "music/song3.mp3" },
     ];
     let currentSongIndex = 0;
+    let isLooping = false;
 
-    // Visualizer Setup
     const maxBars = 30;
     for (let i = 0; i < maxBars; i++) {
-      const bar = document.createElement('div');
-      bar.classList.add('bar');
+      const bar = document.createElement("div");
+      bar.classList.add("bar");
       visualizer.appendChild(bar);
     }
-
-    const bars = Array.from(document.querySelectorAll('.bar'));
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const analyser = audioContext.createAnalyser();
-    const dataArray = new Uint8Array(analyser.frequencyBinCount);
-
-    const source = audioContext.createMediaElementSource(audio);
-    source.connect(analyser);
-    analyser.connect(audioContext.destination);
-    analyser.fftSize = 64;
-
-    function updateVisualizer() {
-      analyser.getByteFrequencyData(dataArray);
-      bars.forEach((bar, index) => {
-        const value = (dataArray[index] / 255) * 200;
-        bar.style.height = `${value}px`;
-      });
-      requestAnimationFrame(updateVisualizer);
-    }
-
-    // Music Player Functions
-    function playSong(index) {
-      currentSongIndex = index;
-      audio.src = songs[index].src;
-      audio.play();
-      playBtn.textContent = 'Pause';
-      updatePlaylist();
-    }
-
-    function updatePlaylist() {
-      const items = playlistContainer.querySelectorAll('li');
-      items.forEach((item, index) => {
-        item.innerHTML = index === currentSongIndex
-          ? `${songs[index].title} <span class="star">★</span>`
-          : songs[index].title;
-      });
-    }
-
-    playBtn.addEventListener('click', () => {
-      if (audio.paused) {
-        audio.play();
-        playBtn.textContent = 'Pause';
-        updateVisualizer();
-      } else {
-        audio.pause();
-        playBtn.textContent = 'Play';
-      }
-    });
-
-    prevBtn.addEventListener('click', () => {
-      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-      playSong(currentSongIndex);
-    });
-
-    nextBtn.addEventListener('click', () => {
-      currentSongIndex = (currentSongIndex + 1) % songs.length;
-      playSong(currentSongIndex);
-    });
-
-    volumeControl.addEventListener('input', (e) => {
-      audio.volume = e.target.value;
-    });
+    const bars = Array.from(document.querySelectorAll(".bar"));
 
     function generatePlaylist() {
       songs.forEach((song, index) => {
-        const listItem = document.createElement('li');
+        const listItem = document.createElement("li");
         listItem.textContent = song.title;
-        listItem.addEventListener('click', () => playSong(index));
+        if (index === currentSongIndex) {
+          listItem.innerHTML += ' <span class="star">★</span>';
+        }
+        listItem.addEventListener("click", () => playSong(index));
         playlistContainer.appendChild(listItem);
       });
     }
 
+    function playSong(index) {
+      currentSongIndex = index;
+      audio.src = songs[index].src;
+      audio.play();
+      playBtn.textContent = "Pause";
+      updatePlaylist();
+    }
+
+    function updatePlaylist() {
+      const items = playlistContainer.querySelectorAll("li");
+      items.forEach((item, index) => {
+        item.innerHTML = index === currentSongIndex
+          ? songs[index].title + ' <span class="star">★</span>'
+          : songs[index].title;
+      });
+    }
+
+    playBtn.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = "Pause";
+      } else {
+        audio.pause();
+        playBtn.textContent = "Play";
+      }
+    });
+
+    prevBtn.addEventListener("click", () => {
+      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+      playSong(currentSongIndex);
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentSongIndex = (currentSongIndex + 1) % songs.length;
+      playSong(currentSongIndex);
+    });
+
+    volumeControl.addEventListener("input", (e) => {
+      audio.volume = e.target.value;
+    });
+
+    loopBtn.addEventListener("click", () => {
+      isLooping = !isLooping;
+      audio.loop = isLooping;
+      loopBtn.textContent = isLooping ? "Loop: On" : "Loop: Off";
+      loopBtn.classList.toggle("active", isLooping);
+    });
+
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = audioContext.createAnalyser();
+    const source = audioContext.createMediaElementSource(audio);
+
+    source.connect(analyser);
+    analyser.connect(audioContext.destination);
+
+    analyser.fftSize = 64;
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    function drawVisualizer() {
+      analyser.getByteFrequencyData(dataArray);
+
+      for (let i = 0; i < bars.length; i++) {
+        const value = (dataArray[i] / 255) * 200;
+        bars[i].style.height = `${value}px`;
+      }
+
+      requestAnimationFrame(drawVisualizer);
+    }
+
+    audio.addEventListener("play", () => {
+      audioContext.resume();
+      drawVisualizer();
+    });
+
     generatePlaylist();
-    playSong(0); // Initialize first song
   </script>
 </body>
 </html>
+
 
