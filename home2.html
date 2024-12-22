@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFKC's Website</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: #f7f7f7;
+    }
+
+    header {
+      background-color: #6a4c9c;
+      color: white;
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid #4a3572;
+    }
+
+    header .logo h1 {
+      font-size: 2em;
+      font-weight: 700;
+      margin-left: 20px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+    }
+
+    nav ul li {
+      margin-right: 30px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      font-size: 1.2em;
+    }
+
+    nav ul li a:hover {
+      color: #d8b3e6;
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 50px 20px;
+      margin: 30px 0;
+      border-bottom: 2px solid #6a4c9c;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2.5em;
+      color: #6a4c9c;
+      margin-bottom: 20px;
+    }
+
+    .section p {
+      font-size: 1.2em;
+      max-width: 800px;
+      margin: 0 auto 30px;
+    }
+
+    /* Music Player Styles */
+    .music-player-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .music-player {
+      background-color: #333333;
+      padding: 20px;
+      border-radius: 8px;
+      width: 300px;
+      color: white;
+      border: 2px solid #444444;
+    }
+
+    .music-player .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .music-player button {
+      background-color: #6a4c9c;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .music-player button:hover {
+      background-color: #4a3572;
+    }
+
+    .music-player input[type="range"] {
+      width: 100%;
+      margin-top: 10px;
+      background-color: #555555;
+      border: none;
+      height: 6px;
+      border-radius: 4px;
+    }
+
+    .music-player input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      background-color: #6a4c9c;
+      border-radius: 50%;
+      height: 20px;
+      width: 20px;
+    }
+
+    .music-player ul {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .music-player ul li {
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .music-player ul li:hover {
+      background-color: #555555;
+    }
+
+    /* Visualizer Styles */
+    .visualizer-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 300px;
+      height: 200px;
+      background-color: #222;
+      border: 2px solid #6a4c9c;
+      border-radius: 8px;
+      margin-left: 20px;
+    }
+
+    .visualizer {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      height: 100%;
+      width: 100%;
+    }
+
+    .bar {
+      background-color: #6a4c9c;
+      width: 10px;
+      margin: 0 2px;
+      transition: height 0.1s ease;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>NFKC's Website!</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Fav/Best Friends</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#musicplayer">Music</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="musicplayer" class="section">
+    <h2>Mini Music Player</h2>
+    <div class="music-player-container">
+      <div class="music-player">
+        <audio id="audio-player">
+          <source id="audio-source" src="music/song1.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <div class="controls">
+          <button id="prevBtn">Prev</button>
+          <button id="nextBtn">Next</button>
+        </div>
+        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
+        <ul id="playlist"></ul>
+        <button class="loop-button" id="loopBtn">Loop: Off</button>
+      </div>
+      <div class="visualizer-container">
+        <div class="visualizer" id="visualizer"></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const audio = document.getElementById('audio-player');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const volumeControl = document.getElementById('volumeControl');
+    const playlistContainer = document.getElementById('playlist');
+    const loopBtn = document.getElementById('loopBtn');
+    const visualizer = document.getElementById('visualizer');
+
+    const songs = [
+      { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
+      { title: 'Magnolia - Playboy Carti', src: 'music/song2.mp3' },
+    ];
+    let currentSongIndex = 0;
+
+    function generatePlaylist() {
+      songs.forEach((song, index) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = song.title;
+        listItem.addEventListener('click', () => playSong(index));
+        playlistContainer.appendChild(listItem);
+      });
+    }
+
+    function playSong(index) {
+      currentSongIndex = index;
+      audio.src = songs[index].src;
+      audio.play();
+    }
+
+    audio.addEventListener('play', () => {
+      const audioCtx = new AudioContext();
+      const analyser = audioCtx.createAnalyser();
+      const source = audioCtx.createMediaElementSource(audio);
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      analyser.fftSize = 64;
+
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+
+      for (let i = 0; i < bufferLength; i++) {
+        const bar = document.createElement('div');
+        bar.classList.add('bar');
+        visualizer.appendChild(bar);
+      }
+      const bars = document.querySelectorAll('.bar');
+
+      function animate() {
+        analyser.getByteFrequencyData(dataArray);
+        bars.forEach((bar, i) => {
+          bar.style.height = `${dataArray[i] / 2}px`;
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    });
+
+    generatePlaylist();
+  </script>
+</body>
+</html>
