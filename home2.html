@@ -188,6 +188,26 @@
     </nav>
   </header>
 
+  <section id="home" class="section">
+    <h2>Welcome to NFKC's Website</h2>
+    <p>Your hub for everything awesome! Scroll down to discover more.</p>
+  </section>
+
+  <section id="about" class="section">
+    <h2>About Me</h2>
+    <p>Hi! I'm NFKC, and I love music, coding, and connecting with friends. Welcome to my personal corner on the web!</p>
+  </section>
+
+  <section id="services" class="section">
+    <h2>Fav/Best Friends</h2>
+    <p>These are the amazing people I call my best friends. You're awesome!</p>
+  </section>
+
+  <section id="contact" class="section">
+    <h2>Contact Me</h2>
+    <p>Have a question or want to connect? Reach out to me at nfkc@example.com.</p>
+  </section>
+
   <section id="musicplayer" class="section">
     <h2>Mini Music Player</h2>
     <div class="music-player-container">
@@ -240,32 +260,23 @@
       audio.play();
     }
 
-    audio.addEventListener('play', () => {
-      const audioCtx = new AudioContext();
-      const analyser = audioCtx.createAnalyser();
-      const source = audioCtx.createMediaElementSource(audio);
-      source.connect(analyser);
-      analyser.connect(audioCtx.destination);
-      analyser.fftSize = 64;
+    prevBtn.addEventListener('click', () => {
+      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+      playSong(currentSongIndex);
+    });
 
-      const bufferLength = analyser.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
+    nextBtn.addEventListener('click', () => {
+      currentSongIndex = (currentSongIndex + 1) % songs.length;
+      playSong(currentSongIndex);
+    });
 
-      for (let i = 0; i < bufferLength; i++) {
-        const bar = document.createElement('div');
-        bar.classList.add('bar');
-        visualizer.appendChild(bar);
-      }
-      const bars = document.querySelectorAll('.bar');
+    loopBtn.addEventListener('click', () => {
+      audio.loop = !audio.loop;
+      loopBtn.textContent = `Loop: ${audio.loop ? 'On' : 'Off'}`;
+    });
 
-      function animate() {
-        analyser.getByteFrequencyData(dataArray);
-        bars.forEach((bar, i) => {
-          bar.style.height = `${dataArray[i] / 2}px`;
-        });
-        requestAnimationFrame(animate);
-      }
-      animate();
+    volumeControl.addEventListener('input', () => {
+      audio.volume = volumeControl.value;
     });
 
     generatePlaylist();
