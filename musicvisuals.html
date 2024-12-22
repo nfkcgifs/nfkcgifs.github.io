@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vertical Audio Visualizer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #f7f7f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      margin: 0;
+      padding-top: 50px; /* Moves the visualizer and elements down */
+    }
+
+    #drop-zone {
+      border: 2px dashed #6a4c9c;
+      border-radius: 10px;
+      padding: 50px;
+      text-align: center;
+      width: 80%;
+      max-width: 600px;
+      background-color: #1a1a1a;
+      color: #d8b3e6;
+      margin-bottom: 20px;
+    }
+
+    #drop-zone.dragover {
+      border-color: #d8b3e6;
+      background-color: #2a2a2a;
+    }
+
+    #visualizer {
+      font-family: "Courier New", monospace;
+      font-size: 1.5em;
+      color: #6a4c9c;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 5px;
+      height: 200px; /* Fixed height for visualizer */
+      width: 80%;
+      max-width: 600px;
+      background-color: #1a1a1a;
+      border: 2px solid #6a4c9c;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .bar {
+      background-color: #6a4c9c;
+      width: 10px;
+      margin: 0;
+      transition: height 0.1s ease;
+    }
+
+    audio {
+      display: none;
+    }
+
+    input[type="file"] {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="drop-zone">Drag and drop any audio file here or click to open one</div>
+  <input type="file" id="file-input" accept="audio/*">
+  <div id="visualizer"></div>
+  <audio id="audio"></audio>
+
+  <script>
+    const dropZone = document.getElementById("drop-zone");
+    const visualizer = document.getElementById("visualizer");
+    const fileInput = document.getElementById("file-input");
+    const audio = document.getElementById("audio");
+    const maxBars = 30; // Number of bars in the visualizer
+
+    // Create bars for the visualizer
+    for (let i = 0; i < maxBars; i++) {
+      const bar = document.createElement("div");
+      bar.classList.add("bar");
+      visualizer.appendChild(bar);
+    }
+
+    const bars = Array.from(document.querySelectorAll(".bar"));
+
+    // Load audio when a file is dropped
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZone.classList.add("dragover");
+    });
+
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.classList.remove("dragover");
+    });
+
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropZone.classList.remove("dragover");
+      const file = e.dataTransfer.files[0];
+
+      if (file && file.type.startsWith("audio/")) {
+        const url = URL.createObjectURL(file);
+        loadAudio(url);
+      } else {
+        alert("Please drop a valid audio file.");
+      }
+    });
+
+    // Load audio when a file is selected from file explorer
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file && file.type.startsWith("audio/")) {
+        const url = URL.createObjectURL(file);
+        loadAudio(url);
+      } else {
+        alert("Please select a valid audio file.");
+      }
+    });
+
+    // Load and play the audio
+    function loadAudio(url) {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const analyser = audioContext.createAnalyser();
+
+      audio.src = url;
+      audio.load();
+      audio.play();
+
+      // Connect the audio to the analyser
+      const source = audioContext.createMediaElementSource(audio);
+      source.connect(analyser);
+      analyser.connect(audioContext.destination);
+
+      analyser.fftSize = 64;
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+
+      function draw() {
+        analyser.getByteFrequencyData(dataArray);
+
+        for (let i = 0; i < bars.length; i++) {
+          const value = (dataArray[i] / 255) * 200; // Normalize values to height of 200px
+          bars[i].style.height = `${value}px`;
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    }
+  </script>
+</body>
+</html>
