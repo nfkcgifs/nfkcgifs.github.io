@@ -314,14 +314,17 @@ favPeopleTitle.addEventListener('click', () => {
 });
  
    
-   const toolsTitle = document.getElementById('tools-title');
-    const toolsContent = document.getElementById('tools-content');
+  const toolsHeader = document.querySelector('.tools-dropdown h2');
+const toolsContent = document.querySelector('.tools-dropdown-content');
 
-    toolsTitle.addEventListener('click', () => {
-      const isVisible = toolsContent.style.display === 'grid';
-      toolsContent.style.display = isVisible ? 'none' : 'grid';
-      toolsTitle.textContent = isVisible ? 'Tools ▼' : 'Tools ▲';
-    });
+toolsHeader.addEventListener('click', () => {
+  if (toolsContent.style.display === 'grid') {
+    toolsContent.style.display = 'none'; // Hide the content
+  } else {
+    toolsContent.style.display = 'grid'; // Show the content
+  }
+});
+
 
     const songs = [
       { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
