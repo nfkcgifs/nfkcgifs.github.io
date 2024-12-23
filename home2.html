@@ -16,6 +16,7 @@
       font-family: Arial, sans-serif;
       background-color: #1a1a1a;
       color: #f7f7f7;
+      line-height: 1.6;
     }
 
     header {
@@ -40,10 +41,6 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 15px;
-    }
-
-    nav ul li {
-      margin: 0;
     }
 
     nav ul li a {
@@ -77,7 +74,6 @@
       margin: 0 auto 20px;
     }
 
-    /* Music Player Styles */
     .music-player {
       background-color: #333333;
       padding: 15px;
@@ -89,89 +85,18 @@
       border: 2px solid #444444;
     }
 
-    .music-player .controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .music-player button {
-      background-color: #6a4c9c;
-      border: none;
-      color: white;
-      padding: 8px 15px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .music-player button:hover {
-      background-color: #4a3572;
-    }
-
-    .music-player input[type="range"] {
-      width: 100%;
-      margin-top: 10px;
-      background-color: #555555;
-      border: none;
-      height: 6px;
-      border-radius: 4px;
-    }
-
-    .music-player input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      background-color: #6a4c9c;
-      border-radius: 50%;
-      height: 20px;
-      width: 20px;
-    }
-
-    .music-player ul {
-      list-style: none;
-      padding: 0;
-      text-align: left;
-      margin-top: 20px;
-    }
-
-    .music-player ul li {
-      padding: 5px;
-      cursor: pointer;
-    }
-
-    .music-player ul li:hover {
-      background-color: #555555;
-    }
-
-    /* Visualizer Styles */
-    .visualizer {
-      font-family: "Courier New", monospace;
-      font-size: 1.2em;
-      color: #6a4c9c;
-      margin-top: 20px;
-      white-space: pre;
-      text-align: center;
-    }
-
-    .star {
-      color: #FFD700;
-    }
-
     footer {
       text-align: center;
       padding: 15px;
       font-size: 0.9em;
       color: #999;
+      margin-top: 20px;
     }
 
-    /* Responsive Styles */
     @media (max-width: 768px) {
       header {
         flex-direction: column;
         align-items: flex-start;
-      }
-
-      header .logo h1 {
-        font-size: 1.5em;
       }
 
       nav ul {
@@ -195,6 +120,60 @@
   </style>
 </head>
 <body>
-  <!-- Your HTML content remains unchanged -->
+  <header>
+    <div class="logo">
+      <h1>NFKC's Website!</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Fav/Best Friends</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#musicplayer">Music</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="home" class="section">
+    <h2>Welcome to my Website!</h2>
+    <p>This website is under heavy development so expect things to change!</p>
+  </section>
+
+  <section id="about" class="section">
+    <h2>About Me!</h2>
+    <p>I'm a silly guy!</p>
+  </section>
+
+  <section id="services" class="section">
+    <h2>Favorite People / Best Friends</h2>
+    <ul>
+      <li>Hazel</li>
+      <li>Lethal/Mak (discord : "makkkkk_.")</li>
+      <li>iiDk</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="section">
+    <h2>Tools</h2>
+    <p>
+      <a href="https://nfkcgifs.github.io/musicvisuals.html">Music Visuals</a> |
+      <a href="https://nfkcgifs.github.io/ytviewer.html">YouTube Viewer (No Ads)</a> |
+      <a href="https://nfkcgifs.github.io/OSZToMP3.html">OSZ to MP3</a> |
+      <a href="https://nfkcgifs.github.io/mp4viewer.html">MP4 Viewer</a> |
+      <a href="https://nfkcgifs.github.io/OSZToZIP.html">OSZ to ZIP</a>
+    </p>
+  </section>
+
+  <section id="musicplayer" class="section">
+    <h2>Mini Music Player</h2>
+    <div class="music-player">
+      <p>Music player functionality goes here.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; Made with ChatGPT and some help from me!</p>
+  </footer>
 </body>
 </html>
