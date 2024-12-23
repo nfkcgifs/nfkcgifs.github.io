@@ -5,7 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NFKC's Website</title>
   <style>
-    /* Same styles as provided */
+       /* Reset and base styles */
+.dropdown {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.dropdown h2 {
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #6a4c9c;
+  text-align: center;
+}
+
+.dropdown-content {
+  display: none; /* Ensure the dropdown starts hidden */
+  margin-top: 15px;
+  padding: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center; /* Center-align the text */
+}
+
+.dropdown-content ul {
+  list-style: none;
+  padding: 0;
+  text-align: center; /* Center-align the list */
+}
+
+.dropdown-content li {
+  margin: 5px 0;
+  color: #f7f7f7;
+  font-size: 1em;
+  text-align: center; /* Center-align each list item */
+}
+
+
+
+   
     * {
       margin: 0;
       padding: 0;
@@ -16,38 +53,38 @@
       font-family: Arial, sans-serif;
       background-color: #1a1a1a;
       color: #f7f7f7;
+      line-height: 1.6;
     }
 
     header {
       background-color: #6a4c9c;
       color: white;
-      padding: 20px 0;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
       border-bottom: 3px solid #4a3572;
     }
 
     header .logo h1 {
-      font-size: 2em;
+      font-size: 1.8em;
       font-weight: 700;
-      margin-left: 20px;
     }
 
     nav ul {
       list-style: none;
       display: flex;
-    }
-
-    nav ul li {
-      margin-right: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
     }
 
     nav ul li a {
       text-decoration: none;
       color: white;
       font-weight: 600;
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
 
     nav ul li a:hover {
@@ -55,42 +92,39 @@
     }
 
     .section {
-      padding: 50px 20px;
-      margin: 30px 0;
+      padding: 40px 15px;
+      margin: 20px 0;
       border-bottom: 2px solid #6a4c9c;
       text-align: center;
     }
 
     .section h2 {
-      font-size: 2.5em;
+      font-size: 2em;
       color: #6a4c9c;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .section p {
-      font-size: 1.2em;
+      font-size: 1em;
       color: #f7f7f7;
-      max-width: 800px;
-      margin: 0 auto 30px;
+      max-width: 90%;
+      margin: 0 auto 20px;
     }
 
-    /* Music Player Styles */
     .music-player {
       background-color: #333333;
       padding: 20px;
       border-radius: 8px;
-      width: 300px;
+      max-width: 500px;
       margin: 0 auto;
       text-align: center;
-      color: white;
       border: 2px solid #444444;
     }
 
     .music-player .controls {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
+      justify-content: space-around;
+      margin: 10px 0;
     }
 
     .music-player button {
@@ -98,7 +132,7 @@
       border: none;
       color: white;
       padding: 10px 20px;
-      margin: 10px;
+      margin: 5px;
       border-radius: 4px;
       cursor: pointer;
     }
@@ -107,47 +141,88 @@
       background-color: #4a3572;
     }
 
-    .music-player input[type="range"] {
-      width: 100%;
-      margin-top: 10px;
-      background-color: #555555;
-      border: none;
-      height: 6px;
-      border-radius: 4px;
-    }
-
-    .music-player input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      background-color: #6a4c9c;
-      border-radius: 50%;
-      height: 20px;
-      width: 20px;
-    }
-
     .music-player ul {
       list-style: none;
       padding: 0;
-      text-align: left;
-      margin-top: 20px;
     }
 
     .music-player ul li {
+      color: #f7f7f7;
       padding: 5px;
       cursor: pointer;
     }
 
-    .music-player ul li:hover {
-      background-color: #555555;
+    .music-player ul li.active {
+      font-weight: bold;
+      color: #6a4c9c;
     }
 
-    /* Visualizer Styles */
-    .visualizer {
-      font-family: "Courier New", monospace;
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+      color: #999;
+      margin-top: 20px;
+    }
+
+    .tools-dropdown {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .tools-dropdown h2 {
+      cursor: pointer;
       font-size: 1.5em;
       color: #6a4c9c;
-      margin-top: 20px;
-      white-space: pre;
+    }
+
+    .tools-dropdown-content {
+      display: none;
+      margin-top: 15px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      padding: 10px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .tools-dropdown-content a {
+      display: block;
       text-align: center;
+      background-color: #6a4c9c;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 0.9em;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .tools-dropdown-content a:hover {
+      background-color: #4a3572;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .section h2 {
+        font-size: 1.5em;
+      }
+
+      .section p {
+        font-size: 0.9em;
+      }
     }
 
     .star {
@@ -191,19 +266,17 @@
   </section>
 
 <section id="contact" class="section">
-  <h2>Tools</h2>
-  <button id="toolsToggle">Show Tools</button>
-  <div id="toolsList" style="display: none;">
-    <p>
-      <a href="https://nfkcgifs.github.io/musicvisuals.html">Music Visuals</a> |
-      <a href="https://nfkcgifs.github.io/ytviewer.html">YouTube Viewer (No Ads)</a> |
-      <a href="https://nfkcgifs.github.io/OSZToMP3.html">OSU Beatmap to MP3</a> |
-      <a href="https://nfkcgifs.github.io/mp4viewer.html">MP4 Viewer</a> |
-      <a href="https://nfkcgifs.github.io/OSZToZIP.html">OSU Beatmap to ZIP</a>
-    </p>
-  </div>
-</section>
-
+    <div class="tools-dropdown">
+      <h2 id="tools-title">Tools ▼</h2>
+      <div id="tools-content" class="tools-dropdown-content">
+        <a href="https://nfkcgifs.github.io/musicvisuals.html">Music Visuals</a>
+        <a href="https://nfkcgifs.github.io/ytviewer.html">YouTube Viewer</a>
+        <a href="https://nfkcgifs.github.io/OSZToMP3.html">OSZ to MP3</a>
+        <a href="https://nfkcgifs.github.io/mp4viewer.html">MP4 Viewer</a>
+        <a href="https://nfkcgifs.github.io/OSZToZIP.html">OSZ to ZIP</a>
+      </div>
+    </div>
+  </section>
 <script>
   const toolsToggle = document.getElementById('toolsToggle');
   const toolsList = document.getElementById('toolsList');
