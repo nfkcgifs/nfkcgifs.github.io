@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSZ to MP3 Extractor</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: #f7f7f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #333;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .drop-area {
+      width: 100%;
+      max-width: 400px;
+      height: 150px;
+      border: 2px dashed #6a4c9c;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0;
+      cursor: pointer;
+      color: #6a4c9c;
+      background-color: #1a1a1a;
+    }
+
+    .drop-area.dragover {
+      background-color: #6a4c9c;
+      color: white;
+    }
+
+    button {
+      background-color: #6a4c9c;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #4a3572;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>OSZ to MP3 Extractor</h1>
+    <div class="drop-area" id="dropArea">Drag and drop a .osz file here, or click to browse</div>
+    <button id="extractBtn">Extract and Download</button>
+  </div>
+
+  <input type="file" id="fileInput" accept=".osz" style="display: none;">
+
+  <script>
+    const dropArea = document.getElementById('dropArea');
+    const fileInput = document.getElementById('fileInput');
+    const extractBtn = document.getElementById('extractBtn');
+    let selectedFile = null;
+
+    dropArea.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      dropArea.classList.add('dragover');
+    });
+
+    dropArea.addEventListener('dragleave', () => {
+      dropArea.classList.remove('dragover');
+    });
+
+    dropArea.addEventListener('drop', (event) => {
+      event.preventDefault();
+      dropArea.classList.remove('dragover');
+      if (event.dataTransfer.files.length) {
+        selectedFile = event.dataTransfer.files[0];
+        handleFileSelection(selectedFile);
+      }
+    });
+
+    dropArea.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) {
+        selectedFile = fileInput.files[0];
+        handleFileSelection(selectedFile);
+      }
+    });
+
+    function handleFileSelection(file) {
+      if (!file.name.endsWith('.osz')) {
+        alert('Please select a valid .osz file.');
+        return;
+      }
+      dropArea.textContent = `Selected file: ${file.name}`;
+    }
+
+    extractBtn.addEventListener('click', async () => {
+      if (!selectedFile) {
+        alert('Please select a .osz file first.');
+        return;
+      }
+
+      try {
+        const zip = new JSZip();
+        const zipContent = await zip.loadAsync(selectedFile);
+
+        const mp3Files = Object.keys(zipContent.files).filter(name => name.endsWith('.mp3'));
+        const backgroundFiles = Object.keys(zipContent.files).filter(name => name.match(/\.(jpg|png|jpeg|mp4|avi)$/i));
+
+        if (mp3Files.length === 0 && backgroundFiles.length === 0) {
+          alert('No audio or background files found in the .osz file.');
+          return;
+        }
+
+        const outputZip = new JSZip();
+
+        for (const mp3File of mp3Files) {
+          const mp3Data = await zipContent.files[mp3File].async('blob');
+          outputZip.file(mp3File.split('/').pop(), mp3Data);
+        }
+
+        for (const bgFile of backgroundFiles) {
+          const bgData = await zipContent.files[bgFile].async('blob');
+          outputZip.file(bgFile.split('/').pop(), bgData);
+        }
+
+        const zipBlob = await outputZip.generateAsync({ type: 'blob' });
+
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(zipBlob);
+        link.download = selectedFile.name.replace(/^[^a-zA-Z]+/, '').replace('.osz', '.zip');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        alert('Audio and background files have been packaged into a zip file!');
+      } catch (error) {
+        console.error(error);
+        alert('An error occurred while processing the file.');
+      }
+    });
+  </script>
+</body>
+</html>
