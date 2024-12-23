@@ -366,6 +366,12 @@
       toolsContent.style.display = isVisible ? 'none' : 'grid';
       toolsTitle.textContent = isVisible ? 'Tools ▼' : 'Tools ▲';
     });
+    
+   favPeopleTitle.addEventListener('click', () => {
+      const isVisible = favPeopleContent.style.display === 'block';
+      favPeopleContent.style.display = isVisible ? 'none' : 'block';
+      favPeopleTitle.textContent = isVisible ? 'Favorite People / Best Friends ▼' : 'Favorite People / Best Friends ▲';
+    });
 
     const songs = [
       { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
