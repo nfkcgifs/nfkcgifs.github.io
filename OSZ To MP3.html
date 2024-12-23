@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSZ to MP3 Extractor</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: #f7f7f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #333;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    input[type="file"] {
+      margin: 10px 0;
+    }
+
+    button {
+      background-color: #6a4c9c;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #4a3572;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 10px;
+      color: #6a4c9c;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>OSZ to MP3 Extractor</h1>
+    <input type="file" id="oszFile" accept=".osz">
+    <button id="extractBtn">Extract MP3s</button>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    document.getElementById('extractBtn').addEventListener('click', async () => {
+      const fileInput = document.getElementById('oszFile');
+      const outputDiv = document.getElementById('output');
+      outputDiv.innerHTML = '';
+
+      if (!fileInput.files.length) {
+        alert('Please select a .osz file.');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      if (!file.name.endsWith('.osz')) {
+        alert('Please select a valid .osz file.');
+        return;
+      }
+
+      try {
+        const zip = new JSZip();
+        const zipContent = await zip.loadAsync(file);
+
+        const mp3Files = Object.keys(zipContent.files).filter(name => name.endsWith('.mp3'));
+
+        if (mp3Files.length === 0) {
+          alert('No .mp3 files found in the .osz file.');
+          return;
+        }
+
+        mp3Files.forEach(async (mp3File) => {
+          const mp3Data = await zipContent.files[mp3File].async('blob');
+          const mp3URL = URL.createObjectURL(mp3Data);
+
+          const downloadLink = document.createElement('a');
+          downloadLink.href = mp3URL;
+          downloadLink.download = mp3File.split('/').pop(); // Use the file name from the archive
+          downloadLink.textContent = `Download ${mp3File.split('/').pop()}`;
+          downloadLink.style.color = '#6a4c9c';
+
+          outputDiv.appendChild(downloadLink);
+          outputDiv.appendChild(document.createElement('br'));
+        });
+      } catch (error) {
+        console.error(error);
+        alert('An error occurred while processing the file.');
+      }
+    });
+  </script>
+</body>
+</html>
