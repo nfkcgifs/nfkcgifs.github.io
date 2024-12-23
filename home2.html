@@ -216,17 +216,18 @@
   </section>
 
   <section id="services" class="section">
-    <div class="dropdown">
-      <h2 id="fav-people-title">Favorite People / Best Friends ▼</h2>
-      <div id="fav-people-content" class="dropdown-content">
-        <ul>
-          <li>Hazel</li>
-          <li>Lethal/Mak (discord : "makkkkk_.")</li>
-          <li>iiDk</li>
-        </ul>
-      </div>
+  <div class="dropdown">
+    <h2 id="fav-people-title">Favorite People / Best Friends ▼</h2>
+    <div id="fav-people-content" class="dropdown-content">
+      <ul>
+        <li>Hazel</li>
+        <li>Lethal/Mak (discord : "makkkkk_.")</li>
+        <li>iiDk</li>
+      </ul>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <section id="contact" class="section">
     <div class="tools-dropdown">
@@ -263,7 +264,19 @@
   </footer>
 
   <script>
-    const toolsTitle = document.getElementById('tools-title');
+   const favPeopleTitle = document.getElementById('fav-people-title');
+const favPeopleContent = document.getElementById('fav-people-content');
+
+favPeopleTitle.addEventListener('click', () => {
+  const isVisible = favPeopleContent.style.display === 'block';
+  favPeopleContent.style.display = isVisible ? 'none' : 'block';
+  favPeopleTitle.textContent = isVisible 
+    ? 'Favorite People / Best Friends ▼' 
+    : 'Favorite People / Best Friends ▲';
+});
+ 
+   
+   const toolsTitle = document.getElementById('tools-title');
     const toolsContent = document.getElementById('tools-content');
 
     toolsTitle.addEventListener('click', () => {
