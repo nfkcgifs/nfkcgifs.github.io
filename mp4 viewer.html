@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom MP4 Player</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: #f7f7f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .drag-drop-box {
+      width: 400px;
+      height: 150px;
+      border: 2px dashed #6a4c9c;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      margin-bottom: 20px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .drag-drop-box.dragging {
+      background-color: #333;
+    }
+
+    .player-container {
+      background: #333;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      width: 500px;
+      max-width: 90%;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .controls input[type="range"] {
+      width: 100%;
+      margin: 0;
+    }
+
+    .button-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .button-container button {
+      background-color: #6a4c9c;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button-container button:hover {
+      background-color: #4a3572;
+    }
+
+    .file-name {
+      color: #ccc;
+      font-size: 0.9em;
+      text-align: center;
+      flex: 1;
+      margin: 0 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="dragDropBox" class="drag-drop-box">
+    Drag & Drop MP4 file here or Click to Browse
+  </div>
+  <div class="player-container">
+    <video id="videoPlayer" controls></video>
+    <div class="controls">
+      <div>
+        <label for="seekBar">Seek</label>
+        <input type="range" id="seekBar" min="0" max="100" value="0">
+      </div>
+      <div>
+        <label for="volumeControl">Volume</label>
+        <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.5">
+      </div>
+      <div class="button-container">
+        <button id="playPauseBtn">Play</button>
+        <span id="fileName" class="file-name">No file loaded</span>
+        <button id="muteBtn">Mute</button>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="fileInput" accept="video/mp4" style="display: none;">
+
+  <script>
+    const dragDropBox = document.getElementById('dragDropBox');
+    const fileInput = document.getElementById('fileInput');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const seekBar = document.getElementById('seekBar');
+    const volumeControl = document.getElementById('volumeControl');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const fileNameSpan = document.getElementById('fileName');
+
+    // Drag-and-drop events
+    dragDropBox.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dragDropBox.classList.add('dragging');
+    });
+
+    dragDropBox.addEventListener('dragleave', () => {
+      dragDropBox.classList.remove('dragging');
+    });
+
+    dragDropBox.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dragDropBox.classList.remove('dragging');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type === 'video/mp4') {
+        loadVideo(file);
+      } else {
+        alert('Please drop a valid MP4 file.');
+      }
+    });
+
+    // Click on drag-drop box to open file explorer
+    dragDropBox.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    // Load file from file input
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file && file.type === 'video/mp4') {
+        loadVideo(file);
+      } else {
+        alert('Please select a valid MP4 file.');
+      }
+    });
+
+    // Load video into player
+    function loadVideo(file) {
+      const fileURL = URL.createObjectURL(file);
+      videoPlayer.src = fileURL;
+      videoPlayer.play();
+      playPauseBtn.textContent = 'Pause';
+      fileNameSpan.textContent = file.name;
+    }
+
+    // Update seek bar max when video is loaded
+    videoPlayer.addEventListener('loadedmetadata', () => {
+      seekBar.max = videoPlayer.duration;
+    });
+
+    // Update seek bar as the video plays
+    videoPlayer.addEventListener('timeupdate', () => {
+      seekBar.value = videoPlayer.currentTime;
+    });
+
+    // Seek video when seek bar value changes
+    seekBar.addEventListener('input', () => {
+      videoPlayer.currentTime = seekBar.value;
+    });
+
+    // Update volume
+    volumeControl.addEventListener('input', () => {
+      videoPlayer.volume = volumeControl.value;
+    });
+
+    // Play or pause the video
+    playPauseBtn.addEventListener('click', () => {
+      if (videoPlayer.paused || videoPlayer.ended) {
+        videoPlayer.play();
+        playPauseBtn.textContent = 'Pause';
+      } else {
+        videoPlayer.pause();
+        playPauseBtn.textContent = 'Play';
+      }
+    });
+
+    // Mute or unmute the video
+    muteBtn.addEventListener('click', () => {
+      if (videoPlayer.muted) {
+        videoPlayer.muted = false;
+        muteBtn.textContent = 'Mute';
+      } else {
+        videoPlayer.muted = true;
+        muteBtn.textContent = 'Unmute';
+      }
+    });
+  </script>
+</body>
+</html>
