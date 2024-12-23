@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NFKC's Website</title>
   <style>
-    /* Same styles as provided */
+    /* Your styles remain unchanged */
     * {
       margin: 0;
       padding: 0;
@@ -74,7 +74,6 @@
       margin: 0 auto 30px;
     }
 
-    /* Music Player Styles */
     .music-player {
       background-color: #333333;
       padding: 20px;
@@ -155,7 +154,6 @@
       background-color: #6a4c9c;
     }
 
-    /* Visualizer Styles */
     .visualizer {
       font-family: "Courier New", monospace;
       font-size: 1.5em;
@@ -186,31 +184,6 @@
     </nav>
   </header>
 
-  <section id="home" class="section">
-    <h2>Welcome to my Website!</h2>
-    <p>this website is under heavy development so expect things to change! <a href="https://nfkcgifs.github.io/musicvisuals.html">music visuals</a>.</p>
-  </section>
-
-  <section id="about" class="section">
-    <h2>About Me!</h2>
-    <p>im a silly guy!</p>
-  </section>
-
-  <section id="services" class="section">
-    <h2>Favorite People / Best Friends</h2>
-    <ul>
-      <p>Hazel</p>
-      <p>Lethal/Mak</p>
-      <p>iiDk</p>
-    </ul>
-  </section>
-
-  <section id="contact" class="section">
-    <h2>Contact Me!</h2>
-    <form>
-      <p>my email which i use for nothing which i can check my emails from is "savmuncher88@gmail.com"</p>
-  </section>
-
   <section id="musicplayer" class="section">
     <h2>Mini Music Player</h2>
     <div class="music-player">
@@ -227,95 +200,16 @@
       <ul id="playlist"></ul>
       <button class="loop-button" id="loopBtn">Loop: Off</button>
     </div>
-    <div class="visualizer" id="visualizer">Loading...</div>
   </section>
-
-  <footer>
-    <p>&copy; unfortunatly i cant make a website on my own so this website was made with ChatGPT and the rest by me.</p>
-  </footer>
 
   <script>
     const audio = document.getElementById('audio-player');
     const playBtn = document.getElementById('playBtn');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    const volumeControl = document.getElementById('volumeControl');
-    const playlistContainer = document.getElementById('playlist');
     const loopBtn = document.getElementById('loopBtn');
-    const visualizer = document.getElementById('visualizer');
 
-    const songs = [
-      { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
-      { title: 'Magnolia - Playboy Carti', src: 'music/song2.mp3' },
-      { title: 'toxic - d3r', src: 'music/song3.mp3' },
-      { title: 'P3T - femtanyl', src: 'music/song4.mp3' },
-      { title: 'Song 5', src: 'music/song5.mp3' },
-      { title: 'Song 6', src: 'music/song6.mp3' },
-      { title: 'Song 7', src: 'music/song7.mp3' },
-      { title: 'Song 8', src: 'music/song8.mp3' },
-    ];
-    let currentSongIndex = 0;
     let isLooping = false;
-
-    function generatePlaylist() {
-      songs.forEach((song, index) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = song.title;
-        if (index === currentSongIndex) {
-          listItem.innerHTML += ' <span class="star">★</span>';
-        }
-        listItem.addEventListener('click', () => playSong(index));
-        playlistContainer.appendChild(listItem);
-      });
-    }
-
-    function playSong(index) {
-      currentSongIndex = index;
-      audio.src = songs[index].src;
-      audio.play();
-      playBtn.textContent = 'Pause';
-      updatePlaylist();
-      loadSongMetadata(songs[index].src);
-    }
-
-    function loadSongMetadata(songSrc) {
-      const songTitle = songSrc.split('/').pop().replace('.mp3', '');
-      visualizer.textContent = `Now Playing: ${songTitle}`;
-    }
-
-    function updatePlaylist() {
-      const items = playlistContainer.querySelectorAll('li');
-      items.forEach((item, index) => {
-        item.innerHTML = index === currentSongIndex
-          ? songs[index].title + ' <span class="star">★</span>'
-          : songs[index].title;
-      });
-    }
-
-    playBtn.addEventListener('click', (event) => {
-      event.preventDefault(); // Prevent default behavior
-      if (audio.paused) {
-        audio.play();
-        playBtn.textContent = 'Pause';
-      } else {
-        audio.pause();
-        playBtn.textContent = 'Play';
-      }
-    });
-
-    prevBtn.addEventListener('click', () => {
-      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-      playSong(currentSongIndex);
-    });
-
-    nextBtn.addEventListener('click', () => {
-      currentSongIndex = (currentSongIndex + 1) % songs.length;
-      playSong(currentSongIndex);
-    });
-
-    volumeControl.addEventListener('input', (e) => {
-      audio.volume = e.target.value;
-    });
 
     loopBtn.addEventListener('click', () => {
       isLooping = !isLooping;
@@ -324,31 +218,15 @@
       loopBtn.classList.toggle('active', isLooping);
     });
 
-    function updateVisualizer() {
-      const currentTime = audio.currentTime;
-      const duration = audio.duration;
-      const percentage = (currentTime / duration) * 100;
-      const bars = Math.floor(percentage / 10);
-      let visualText = '';
-      for (let i = 0; i < bars; i++) {
-        visualText += '#';
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = 'Pause';
+      } else {
+        audio.pause();
+        playBtn.textContent = 'Play';
       }
-      for (let i = bars; i < 10; i++) {
-        visualText += ' ';
-      }
-      visualizer.textContent = `|${visualText}| ${Math.floor(percentage)}%`;
-    }
-    setInterval(updateVisualizer, 100);
-
-    function initializePlayer() {
-      audio.autoplay = false;
-      playBtn.textContent = 'Play';
-      loadSongMetadata(songs[currentSongIndex].src);
-      updatePlaylist();
-    }
-
-    generatePlaylist();
-    initializePlayer();
+    });
   </script>
 </body>
 </html>
