@@ -191,10 +191,34 @@
   </section>
 
   <section id="contact" class="section">
-    <h2>Tools</h2>
-    <form>
-      <p> <a href="https://nfkcgifs.github.io/musicvisuals.html">music visuals</a> <a href="https://nfkcgifs.github.io/ytviewer.html">youtube viewer no ads</a> <a href="https://nfkcgifs.github.io/OSZToMP3.html">osu beatmap to mp3</a> <a href="https://nfkcgifs.github.io/mp4viewer.html">mp4 viewer</a> <a href="https://nfkcgifs.github.io/OSZToZIP.html">osu beatmap to zip</a></p>
-  </section>
+  <h2>Tools</h2>
+  <button id="toolsToggle">Show Tools</button>
+  <div id="toolsList" style="display: none;">
+    <p>
+      <a href="https://nfkcgifs.github.io/musicvisuals.html">Music Visuals</a> |
+      <a href="https://nfkcgifs.github.io/ytviewer.html">YouTube Viewer (No Ads)</a> |
+      <a href="https://nfkcgifs.github.io/OSZToMP3.html">OSU Beatmap to MP3</a> |
+      <a href="https://nfkcgifs.github.io/mp4viewer.html">MP4 Viewer</a> |
+      <a href="https://nfkcgifs.github.io/OSZToZIP.html">OSU Beatmap to ZIP</a>
+    </p>
+  </div>
+</section>
+
+<script>
+  const toolsToggle = document.getElementById('toolsToggle');
+  const toolsList = document.getElementById('toolsList');
+
+  toolsToggle.addEventListener('click', () => {
+    if (toolsList.style.display === 'none') {
+      toolsList.style.display = 'block';
+      toolsToggle.textContent = 'Hide Tools';
+    } else {
+      toolsList.style.display = 'none';
+      toolsToggle.textContent = 'Show Tools';
+    }
+  });
+</script>
+
 
   <section id="musicplayer" class="section">
     <h2>Mini Music Player</h2>
