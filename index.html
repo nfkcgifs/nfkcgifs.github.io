@@ -399,32 +399,24 @@
     });
 
     
+function updateVisualizer() {
+  const currentTime = audio.currentTime;
+  const duration = audio.duration;
+  const percentage = (currentTime / duration) * 100;
+  const bars = Math.floor(percentage / 10);
+  let visualText = '';
 
-    function updateVisualizer() {
-      const currentTime = audio.currentTime;
-      const duration = audio.duration;
-      const percentage = (currentTime / duration) * 100;
-      const bars = Math.floor(percentage / 10);
-      let visualText = '';
-      for (let i = 0; i < bars; i++) {
-        visualText += '#';
-      }
-      for (let i = bars; i < 10; i++) {
-        visualText += ' ';
-      }
-      visualizer.textContent = `|${visualText}| ${Math.floor(percentage)}%`;
-    }
-    setInterval(updateVisualizer, 100);
+  for (let i = 0; i < bars; i++) {
+    visualText += '<span style="color: #6a4c9c;">#</span>';
+  }
+  for (let i = bars; i < 10; i++) {
+    visualText += '<span style="color: gray;">#</span>';
+  }
 
-    function initializePlayer() {
-      audio.autoplay = false;
-      playBtn.textContent = 'Play';
-      loadSongMetadata(songs[currentSongIndex].src);
-      updatePlaylist();
-    }
+  visualizer.innerHTML = `|${visualText}| ${Math.floor(percentage)}%`;
+}
+setInterval(updateVisualizer, 100);
 
-    generatePlaylist();
-    initializePlayer();
   </script>
 </body>
 </html>
