@@ -67,11 +67,12 @@
       margin-bottom: 15px;
     }
 
-    .section p {
-      font-size: 1em;
-      color: #f7f7f7;
-      max-width: 90%;
-      margin: 0 auto 20px;
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+      color: #999;
+      margin-top: 20px;
     }
 
     .music-player {
@@ -105,77 +106,43 @@
       background-color: #4a3572;
     }
 
-    footer {
-      text-align: center;
-      padding: 15px;
-      font-size: 0.9em;
-      color: #999;
-      margin-top: 20px;
+    .music-player input[type="range"] {
+      width: 100%;
+      margin-top: 10px;
     }
 
-    /* Tools dropdown with grid buttons */
-    .tools-dropdown {
-      text-align: center;
-      margin: 20px 0;
+    #playlist {
+      list-style: none;
+      padding: 0;
+      margin: 15px 0;
+      text-align: left;
+      max-width: 400px;
+      margin: 10px auto;
     }
 
-    .tools-dropdown h2 {
+    #playlist li {
+      margin: 5px 0;
+      padding: 10px;
+      background-color: #444444;
+      border-radius: 4px;
       cursor: pointer;
-      font-size: 1.5em;
-      color: #6a4c9c;
     }
 
-    .tools-dropdown-content {
-      display: none;
-      margin-top: 15px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 10px;
-      padding: 10px;
-      max-width: 600px;
-      margin: 0 auto;
+    #playlist li .star {
+      color: gold;
     }
 
-    .tools-dropdown-content a {
-      display: block;
-      text-align: center;
+    #playlist li:hover {
       background-color: #6a4c9c;
-      color: white;
-      text-decoration: none;
+    }
+
+    #visualizer {
+      margin-top: 15px;
       padding: 10px;
-      border-radius: 5px;
-      font-size: 0.9em;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-
-    .tools-dropdown-content a:hover {
-      background-color: #4a3572;
-    }
-
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      nav ul {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-
-      .section h2 {
-        font-size: 1.5em;
-      }
-
-      .section p {
-        font-size: 0.9em;
-      }
-
-      .music-player {
-        width: 100%;
-      }
+      background-color: #222222;
+      border: 2px solid #333333;
+      border-radius: 8px;
+      font-family: monospace;
     }
   </style>
 </head>
@@ -195,61 +162,56 @@
     </nav>
   </header>
 
-  <section id="home" class="section">
-    <h2>Welcome to my Website!</h2>
-    <p>This website is under heavy development so expect things to change!</p>
-  </section>
-
-  <section id="about" class="section">
-    <h2>About Me!</h2>
-    <p>I'm a silly guy!</p>
-  </section>
-
-  <section id="services" class="section">
-    <h2>Favorite People / Best Friends</h2>
-    <ul>
-      <li>Hazel</li>
-      <li>Lethal/Mak (discord : "makkkkk_.")</li>
-      <li>iiDk</li>
-    </ul>
-  </section>
-
-  <section id="contact" class="section">
-    <div class="tools-dropdown">
-      <h2 id="tools-title">Tools ▼</h2>
-      <div id="tools-content" class="tools-dropdown-content">
-        <a href="https://nfkcgifs.github.io/musicvisuals.html">Music Visuals</a>
-        <a href="https://nfkcgifs.github.io/ytviewer.html">YouTube Viewer</a>
-        <a href="https://nfkcgifs.github.io/OSZToMP3.html">OSZ to MP3</a>
-        <a href="https://nfkcgifs.github.io/mp4viewer.html">MP4 Viewer</a>
-        <a href="https://nfkcgifs.github.io/OSZToZIP.html">OSZ to ZIP</a>
-      </div>
-    </div>
-  </section>
-
   <section id="musicplayer" class="section">
     <h2>Mini Music Player</h2>
     <div class="music-player">
-      <audio id="audio-player" controls>
-        <source src="music/song1.mp3" type="audio/mp3">
+      <audio id="audio-player">
+        <source id="audio-source" src="music/song1.mp3" type="audio/mp3">
         Your browser does not support the audio element.
       </audio>
+      <div class="controls">
+        <button id="prevBtn">Prev</button>
+        <button id="playBtn">Play</button>
+        <button id="nextBtn">Next</button>
+      </div>
+      <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
+      <ul id="playlist"></ul>
     </div>
+    <div class="visualizer" id="visualizer">Loading...</div>
   </section>
 
   <footer>
-    <p>&copy; Made with ChatGPT and some help from me!</p>
+    <p>&copy; Unfortunately, I can't make a website on my own, so this website (and other website things) was made with ChatGPT and the rest by me.</p>
   </footer>
 
   <script>
-    const toolsTitle = document.getElementById('tools-title');
-    const toolsContent = document.getElementById('tools-content');
+    // Your JavaScript code here
+    const audio = document.getElementById('audio-player');
+    const playBtn = document.getElementById('playBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const volumeControl = document.getElementById('volumeControl');
+    const playlistContainer = document.getElementById('playlist');
+    const visualizer = document.getElementById('visualizer');
 
-    toolsTitle.addEventListener('click', () => {
-      const isVisible = toolsContent.style.display === 'grid';
-      toolsContent.style.display = isVisible ? 'none' : 'grid';
-      toolsTitle.textContent = isVisible ? 'Tools ▼' : 'Tools ▲';
-    });
+    const songs = [
+      { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
+      { title: 'Magnolia - Playboy Carti', src: 'music/song2.mp3' },
+      { title: 'toxic - d3r', src: 'music/song3.mp3' },
+      { title: 'P3T - femtanyl', src: 'music/song4.mp3' },
+      { title: 'Ice Ice Baby - Vanilla Ice', src: 'music/song5.mp3' },
+    ];
+
+    let currentSongIndex = 0;
+    let isLooping = true;
+
+    // Functions for player functionality
+    function generatePlaylist() { /* Function content */ }
+    function playSong(index) { /* Function content */ }
+    function updateVisualizer() { /* Function content */ }
+    setInterval(updateVisualizer, 100);
+
+    generatePlaylist();
   </script>
 </body>
 </html>
