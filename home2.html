@@ -165,45 +165,44 @@
       margin-top: 20px;
     }
 
-   .tools-dropdown {
-  text-align: center;
-  margin: 20px 0;
-}
+    .tools-dropdown {
+      text-align: center;
+      margin: 20px 0;
+    }
 
-.tools-dropdown h2 {
-  cursor: pointer;
-  font-size: 1.5em;
-  color: #6a4c9c;
-}
+    .tools-dropdown h2 {
+      cursor: pointer;
+      font-size: 1.5em;
+      color: #6a4c9c;
+    }
 
-.tools-dropdown-content {
-  display: none; /* Initially hidden */
-  margin-top: 15px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 10px;
-  padding: 10px;
-  max-width: 600px;
-  margin: 0 auto;
-}
+    .tools-dropdown-content {
+      display: none;
+      margin-top: 15px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      padding: 10px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
-.tools-dropdown-content a {
-  display: block;
-  text-align: center;
-  background-color: #6a4c9c;
-  color: white;
-  text-decoration: none;
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 0.9em;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
+    .tools-dropdown-content a {
+      display: block;
+      text-align: center;
+      background-color: #6a4c9c;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 0.9em;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
 
-.tools-dropdown-content a:hover {
-  background-color: #4a3572;
-}
-
+    .tools-dropdown-content a:hover {
+      background-color: #4a3572;
+    }
 
     @media (max-width: 768px) {
       header {
@@ -266,21 +265,7 @@
   </div>
 </section>
 
-<section id="contact" class="section">
-  <div class="tools-dropdown"> 
- <h2 id="tools-title">Tools ▼</h2>
-      <div id="tools-content" class="tools-dropdown-content">
-    <div id="fav-people-content" class="dropdown-content">
-      <a href="https://nfkcgifs.github.io/musicvisuals.html">Music Visuals</a>
-        <a href="https://nfkcgifs.github.io/ytviewer.html">YouTube Viewer</a>
-        <a href="https://nfkcgifs.github.io/OSZToMP3.html">OSZ to MP3</a>
-        <a href="https://nfkcgifs.github.io/mp4viewer.html">MP4 Viewer</a>
-        <a href="https://nfkcgifs.github.io/OSZToZIP.html">OSZ to ZIP</a>
-    </div>
-  </div>
-</section>
 
- 
   <section id="contact" class="section">
     <div class="tools-dropdown">
       <h2 id="tools-title">Tools ▼</h2>
@@ -328,17 +313,14 @@ favPeopleTitle.addEventListener('click', () => {
 });
  
    
-  const toolsHeader = document.querySelector('.tools-dropdown h2');
-const toolsContent = document.querySelector('.tools-dropdown-content');
+   const toolsTitle = document.getElementById('tools-title');
+    const toolsContent = document.getElementById('tools-content');
 
-toolsHeader.addEventListener('click', () => {
-  if (toolsContent.style.display === 'grid') {
-    toolsContent.style.display = 'none'; // Hide the content
-  } else {
-    toolsContent.style.display = 'grid'; // Show the content
-  }
-});
-
+    toolsTitle.addEventListener('click', () => {
+      const isVisible = toolsContent.style.display === 'grid';
+      toolsContent.style.display = isVisible ? 'none' : 'grid';
+      toolsTitle.textContent = isVisible ? 'Tools ▼' : 'Tools ▲';
+    });
 
     const songs = [
       { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
@@ -399,6 +381,57 @@ toolsHeader.addEventListener('click', () => {
 
     // Initial load
     loadSong(currentSongIndex);
+  </script>
+</body>
+</html>
+
+
+  <section id="musicplayer" class="section">
+    <h2>Mini Music Player</h2>
+    <div class="music-player">
+      <audio id="audio-player">
+        <source id="audio-source" src="music/song1.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+      <div class="controls">
+        <button id="prevBtn">Prev</button>
+        <button id="playBtn">Play</button>
+        <button id="nextBtn">Next</button>
+      </div>
+      <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
+      <ul id="playlist"></ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; Made with ChatGPT and some help from me!</p>
+  </footer>
+
+  <script>
+    const toolsTitle = document.getElementById('tools-title');
+    const toolsContent = document.getElementById('tools-content');
+
+    toolsTitle.addEventListener('click', () => {
+      const isVisible = toolsContent.style.display === 'grid';
+      toolsContent.style.display = isVisible ? 'none' : 'grid';
+      toolsTitle.textContent = isVisible ? 'Tools ▼' : 'Tools ▲';
+    });
+    
+   favPeopleTitle.addEventListener('click', () => {
+      const isVisible = favPeopleContent.style.display === 'block';
+      favPeopleContent.style.display = isVisible ? 'none' : 'block';
+      favPeopleTitle.textContent = isVisible ? 'Favorite People / Best Friends ▼' : 'Favorite People / Best Friends ▲';
+    });
+
+    const songs = [
+      { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
+      { title: 'Magnolia - Playboy Carti', src: 'music/song2.mp3' },
+      { title: 'Toxic - d3r', src: 'music/song3.mp3' },
+      { title: 'P3T - femtanyl', src: 'music/song4.mp3' },
+      { title: 'Ice Ice Baby - Vanilla Ice', src: 'music/song5.mp3' }
+    ];
+
+
   </script>
 </body>
 </html>
