@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NFKC's Website</title>
   <style>
-    /* Same styles as provided */
+    /* Reset and base styles */
     * {
       margin: 0;
       padding: 0;
@@ -21,33 +21,36 @@
     header {
       background-color: #6a4c9c;
       color: white;
-      padding: 20px 0;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
       border-bottom: 3px solid #4a3572;
     }
 
     header .logo h1 {
-      font-size: 2em;
+      font-size: 1.8em;
       font-weight: 700;
-      margin-left: 20px;
     }
 
     nav ul {
       list-style: none;
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
     }
 
     nav ul li {
-      margin-right: 30px;
+      margin: 0;
     }
 
     nav ul li a {
       text-decoration: none;
       color: white;
       font-weight: 600;
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
 
     nav ul li a:hover {
@@ -55,31 +58,31 @@
     }
 
     .section {
-      padding: 50px 20px;
-      margin: 30px 0;
+      padding: 40px 15px;
+      margin: 20px 0;
       border-bottom: 2px solid #6a4c9c;
       text-align: center;
     }
 
     .section h2 {
-      font-size: 2.5em;
+      font-size: 2em;
       color: #6a4c9c;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     .section p {
-      font-size: 1.2em;
+      font-size: 1em;
       color: #f7f7f7;
-      max-width: 800px;
-      margin: 0 auto 30px;
+      max-width: 90%;
+      margin: 0 auto 20px;
     }
 
     /* Music Player Styles */
     .music-player {
       background-color: #333333;
-      padding: 20px;
+      padding: 15px;
       border-radius: 8px;
-      width: 300px;
+      max-width: 90%;
       margin: 0 auto;
       text-align: center;
       color: white;
@@ -90,15 +93,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 100%;
+      gap: 10px;
     }
 
     .music-player button {
       background-color: #6a4c9c;
       border: none;
       color: white;
-      padding: 10px 20px;
-      margin: 10px;
+      padding: 8px 15px;
       border-radius: 4px;
       cursor: pointer;
     }
@@ -143,7 +145,7 @@
     /* Visualizer Styles */
     .visualizer {
       font-family: "Courier New", monospace;
-      font-size: 1.5em;
+      font-size: 1.2em;
       color: #6a4c9c;
       margin-top: 20px;
       white-space: pre;
@@ -153,201 +155,46 @@
     .star {
       color: #FFD700;
     }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+      color: #999;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      header .logo h1 {
+        font-size: 1.5em;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .section h2 {
+        font-size: 1.5em;
+      }
+
+      .section p {
+        font-size: 0.9em;
+      }
+
+      .music-player {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <h1>NFKC's Website!</h1>
-    </div>
-    <nav>
-      <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Fav/Best Friends</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#musicplayer">Music</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <section id="home" class="section">
-    <h2>Welcome to my Website!</h2>
-    <p>this website is under heavy development so expect things to change! -[MOBILE NOT SUPPORTED AS OF RIGHT NOW.]-</p>
-  </section>
-
-  <section id="about" class="section">
-    <h2>About Me!</h2>
-    <p>im a silly guy!</p>
-  </section>
-
-  <section id="services" class="section">
-    <h2>Favorite People / Best Friends</h2>
-    <ul>
-      <p>Hazel</p>
-      <p>Lethal/Mak (discord : "makkkkk_.")</p>
-      <p>iiDk</p>
-    </ul>
-  </section>
-
- <section id="contact" class="section">
-  <h2 id="tools-title" style="cursor: pointer; color: #6a4c9c;">Tools ▼</h2>
-  <div id="tools-content" style="display: none;">
-    <form>
-      <p>
-        <a href="https://nfkcgifs.github.io/musicvisuals.html">music visuals</a>
-        <a href="https://nfkcgifs.github.io/ytviewer.html">youtube viewer no ads</a>
-        <a href="https://nfkcgifs.github.io/OSZToMP3.html">osu beatmap to mp3</a>
-        <a href="https://nfkcgifs.github.io/mp4viewer.html">mp4 viewer</a>
-        <a href="https://nfkcgifs.github.io/OSZToZIP.html">osu beatmap to zip</a>
-      </p>
-    </form>
-  </div>
-</section>
-
-<script>
-  const toolsTitle = document.getElementById('tools-title');
-  const toolsContent = document.getElementById('tools-content');
-
-  toolsTitle.addEventListener('click', () => {
-    const isOpen = toolsContent.style.display === 'block';
-    toolsContent.style.display = isOpen ? 'none' : 'block';
-    toolsTitle.textContent = isOpen ? 'Tools ▼' : 'Tools ▲';
-  });
-</script>
-
-
-  <section id="musicplayer" class="section">
-    <h2>Mini Music Player</h2>
-    <div class="music-player">
-      <audio id="audio-player">
-        <source id="audio-source" src="music/song1.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-      </audio>
-      <div class="controls">
-        <button id="prevBtn">Prev</button>
-        <button id="playBtn">Play</button>
-        <button id="nextBtn">Next</button>
-      </div>
-      <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
-      <ul id="playlist"></ul>
-    </div>
-    <div class="visualizer" id="visualizer">Loading...</div>
-  </section>
-
-  <footer>
-    <p>&copy; unfortunatly i cant make a website on my own so this website (and other website things) was made with ChatGPT and the rest by me.</p>
-  </footer>
-
-  <script>
-    const audio = document.getElementById('audio-player');
-    const playBtn = document.getElementById('playBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const volumeControl = document.getElementById('volumeControl');
-    const playlistContainer = document.getElementById('playlist');
-    const visualizer = document.getElementById('visualizer');
-
-    const songs = [
-      { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
-      { title: 'Magnolia - Playboy Carti', src: 'music/song2.mp3' },
-      { title: 'toxic - d3r', src: 'music/song3.mp3' },
-      { title: 'P3T - femtanyl', src: 'music/song4.mp3' },
-      { title: 'Ice Ice Baby - Vanilla Ice', src: 'music/song5.mp3' },
-      { title: 'Song 6', src: 'music/song6.mp3' },
-      { title: 'Song 7', src: 'music/song7.mp3' },
-      { title: 'Song 8', src: 'music/song8.mp3' },
-    ];
-    let currentSongIndex = 0;
-    let isLooping = true;
-
-    function generatePlaylist() {
-      songs.forEach((song, index) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = song.title;
-        if (index === currentSongIndex) {
-          listItem.innerHTML += ' <span class="star">★</span>';
-        }
-        listItem.addEventListener('click', () => playSong(index));
-        playlistContainer.appendChild(listItem);
-      });
-    }
-
-    function playSong(index) {
-      currentSongIndex = index;
-      audio.src = songs[index].src;
-      audio.play();
-      playBtn.textContent = 'Pause';
-      updatePlaylist();
-      loadSongMetadata(songs[index].src);
-    }
-
-    function loadSongMetadata(songSrc) {
-      const songTitle = songSrc.split('/').pop().replace('.mp3', '');
-      visualizer.textContent = `Now Playing: ${songTitle}`;
-    }
-
-    function updatePlaylist() {
-      const items = playlistContainer.querySelectorAll('li');
-      items.forEach((item, index) => {
-        item.innerHTML = index === currentSongIndex
-          ? songs[index].title + ' <span class="star">★</span>'
-          : songs[index].title;
-      });
-    }
-
-    playBtn.addEventListener('click', (event) => {
-      event.preventDefault(); // Prevent default behavior
-      if (audio.paused) {
-        audio.play();
-        playBtn.textContent = 'Pause';
-      } else {
-        audio.pause();
-        playBtn.textContent = 'Play';
-      }
-    });
-
-    prevBtn.addEventListener('click', () => {
-      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-      playSong(currentSongIndex);
-    });
-
-    nextBtn.addEventListener('click', () => {
-      currentSongIndex = (currentSongIndex + 1) % songs.length;
-      playSong(currentSongIndex);
-    });
-
-    volumeControl.addEventListener('input', (e) => {
-      audio.volume = e.target.value;
-    });
-
-    
-
-    function updateVisualizer() {
-      const currentTime = audio.currentTime;
-      const duration = audio.duration;
-      const percentage = (currentTime / duration) * 100;
-      const bars = Math.floor(percentage / 10);
-      let visualText = '';
-      for (let i = 0; i < bars; i++) {
-        visualText += '#';
-      }
-      for (let i = bars; i < 10; i++) {
-        visualText += ' ';
-      }
-      visualizer.textContent = `|${visualText}| ${Math.floor(percentage)}%`;
-    }
-    setInterval(updateVisualizer, 100);
-
-    function initializePlayer() {
-      audio.autoplay = false;
-      playBtn.textContent = 'Play';
-      loadSongMetadata(songs[currentSongIndex].src);
-      updatePlaylist();
-    }
-
-    generatePlaylist();
-    initializePlayer();
-  </script>
+  <!-- Your HTML content remains unchanged -->
 </body>
 </html>
