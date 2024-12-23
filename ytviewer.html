@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom YouTube Player</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: #f7f7f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .player-container {
+      background: #333;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      width: 500px;
+      max-width: 90%;
+    }
+
+    .video-container {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: black;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .controls button {
+      background-color: #6a4c9c;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .controls button:hover {
+      background-color: #4a3572;
+    }
+
+    .slider-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .slider-group label {
+      color: white;
+      font-size: 1em;
+      margin-right: 10px;
+    }
+
+    .input-container {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .input-container input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    .input-container button {
+      background-color: #6a4c9c;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .input-container button:hover {
+      background-color: #4a3572;
+    }
+  </style>
+</head>
+<body>
+  <div class="player-container">
+    <div class="input-container">
+      <input type="text" id="videoLink" placeholder="Enter YouTube or Shorts link">
+      <button id="loadVideoBtn">Load Video</button>
+    </div>
+    <div id="player" class="video-container"></div>
+    <div class="slider-group">
+      <div>
+        <label for="volumeSlider">Volume</label>
+        <input type="range" id="volumeSlider" min="0" max="100" step="1" value="50">
+      </div>
+    </div>
+    <div class="controls">
+      <button id="playPauseBtn">Play</button>
+      <button id="muteBtn">Mute</button>
+    </div>
+  </div>
+
+  <script>
+    let player;
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const videoLink = document.getElementById('videoLink');
+    const loadVideoBtn = document.getElementById('loadVideoBtn');
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '360',
+        width: '640',
+        playerVars: {
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          autoplay: 0,
+        },
+        events: {
+          onReady: onPlayerReady,
+        },
+      });
+    }
+
+    function onPlayerReady() {
+      playPauseBtn.addEventListener('click', () => {
+        const playerState = player.getPlayerState();
+        if (playerState === YT.PlayerState.PLAYING) {
+          player.pauseVideo();
+          playPauseBtn.textContent = 'Play';
+        } else {
+          player.playVideo();
+          playPauseBtn.textContent = 'Pause';
+        }
+      });
+
+      muteBtn.addEventListener('click', () => {
+        if (player.isMuted()) {
+          player.unMute();
+          muteBtn.textContent = 'Mute';
+        } else {
+          player.mute();
+          muteBtn.textContent = 'Unmute';
+        }
+      });
+
+      volumeSlider.addEventListener('input', () => {
+        const volume = volumeSlider.value;
+        player.setVolume(volume);
+      });
+    }
+
+    function extractVideoID(url) {
+      // Regex to handle both regular YouTube links and Shorts links
+      const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/|v\/)|youtu\.be\/)([\w-]{11})/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    }
+
+    loadVideoBtn.addEventListener('click', () => {
+      const videoURL = videoLink.value;
+      const videoID = extractVideoID(videoURL);
+      if (videoID) {
+        player.loadVideoById(videoID);
+        playPauseBtn.textContent = 'Pause';
+      } else {
+        alert('Invalid YouTube or Shorts link. Please enter a valid link.');
+      }
+    });
+  </script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>
