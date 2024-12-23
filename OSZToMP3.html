@@ -26,8 +26,24 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     }
 
-    input[type="file"] {
+    .drop-area {
+      width: 100%;
+      max-width: 400px;
+      height: 150px;
+      border: 2px dashed #6a4c9c;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin: 10px 0;
+      cursor: pointer;
+      color: #6a4c9c;
+      background-color: #1a1a1a;
+    }
+
+    .drop-area.dragover {
+      background-color: #6a4c9c;
+      color: white;
     }
 
     button {
@@ -42,47 +58,71 @@
     button:hover {
       background-color: #4a3572;
     }
-
-    a {
-      display: inline-block;
-      margin-top: 10px;
-      color: #6a4c9c;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>OSZ to MP3 Extractor</h1>
-    <input type="file" id="oszFile" accept=".osz">
+    <div class="drop-area" id="dropArea">Drag and drop a .osz file here, or click to browse</div>
     <button id="extractBtn">Extract MP3s</button>
-    <div id="output"></div>
   </div>
 
+  <input type="file" id="fileInput" accept=".osz" style="display: none;">
+
   <script>
-    document.getElementById('extractBtn').addEventListener('click', async () => {
-      const fileInput = document.getElementById('oszFile');
-      const outputDiv = document.getElementById('output');
-      outputDiv.innerHTML = '';
+    const dropArea = document.getElementById('dropArea');
+    const fileInput = document.getElementById('fileInput');
+    const extractBtn = document.getElementById('extractBtn');
+    let selectedFile = null;
 
-      if (!fileInput.files.length) {
-        alert('Please select a .osz file.');
-        return;
+    // Drag-and-drop and click handling
+    dropArea.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      dropArea.classList.add('dragover');
+    });
+
+    dropArea.addEventListener('dragleave', () => {
+      dropArea.classList.remove('dragover');
+    });
+
+    dropArea.addEventListener('drop', (event) => {
+      event.preventDefault();
+      dropArea.classList.remove('dragover');
+      if (event.dataTransfer.files.length) {
+        selectedFile = event.dataTransfer.files[0];
+        handleFileSelection(selectedFile);
       }
+    });
 
-      const file = fileInput.files[0];
+    dropArea.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) {
+        selectedFile = fileInput.files[0];
+        handleFileSelection(selectedFile);
+      }
+    });
+
+    function handleFileSelection(file) {
       if (!file.name.endsWith('.osz')) {
         alert('Please select a valid .osz file.');
+        return;
+      }
+      dropArea.textContent = `Selected file: ${file.name}`;
+    }
+
+    // Extract MP3 files
+    extractBtn.addEventListener('click', async () => {
+      if (!selectedFile) {
+        alert('Please select a .osz file first.');
         return;
       }
 
       try {
         const zip = new JSZip();
-        const zipContent = await zip.loadAsync(file);
+        const zipContent = await zip.loadAsync(selectedFile);
 
         const mp3Files = Object.keys(zipContent.files).filter(name => name.endsWith('.mp3'));
 
@@ -91,22 +131,23 @@
           return;
         }
 
-        mp3Files.forEach(async (mp3File) => {
+        for (const mp3File of mp3Files) {
           const mp3Data = await zipContent.files[mp3File].async('blob');
           const mp3URL = URL.createObjectURL(mp3Data);
 
-          const downloadLink = document.createElement('a');
-          downloadLink.href = mp3URL;
-          downloadLink.download = mp3File.split('/').pop(); // Use the file name from the archive
-          downloadLink.textContent = `Download ${mp3File.split('/').pop()}`;
-          downloadLink.style.color = '#6a4c9c';
+          // Create an invisible link to trigger download
+          const link = document.createElement('a');
+          link.href = mp3URL;
+          link.download = mp3File.split('/').pop(); // Use the file name from the archive
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
 
-          outputDiv.appendChild(downloadLink);
-          outputDiv.appendChild(document.createElement('br'));
-        });
+        alert('The file you imported has been extracted and now is able to be viewed as a mp3 file!');
       } catch (error) {
         console.error(error);
-        alert('An error occurred while processing the file.');
+        alert('Whoops, something went wrong trying to process your file...');
       }
     });
   </script>
