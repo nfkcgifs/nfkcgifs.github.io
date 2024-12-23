@@ -113,7 +113,7 @@
       margin-top: 20px;
     }
 
-    /* Tools dropdown */
+    /* Tools dropdown with grid buttons */
     .tools-dropdown {
       text-align: center;
       margin: 20px 0;
@@ -128,17 +128,29 @@
     .tools-dropdown-content {
       display: none;
       margin-top: 15px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      padding: 10px;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     .tools-dropdown-content a {
       display: block;
+      text-align: center;
+      background-color: #6a4c9c;
       color: white;
       text-decoration: none;
-      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 0.9em;
+      font-weight: bold;
+      transition: background-color 0.3s;
     }
 
     .tools-dropdown-content a:hover {
-      color: #d8b3e6;
+      background-color: #4a3572;
     }
 
     @media (max-width: 768px) {
@@ -207,7 +219,7 @@
       <h2 id="tools-title">Tools ▼</h2>
       <div id="tools-content" class="tools-dropdown-content">
         <a href="https://nfkcgifs.github.io/musicvisuals.html">Music Visuals</a>
-        <a href="https://nfkcgifs.github.io/ytviewer.html">YouTube Viewer (No Ads)</a>
+        <a href="https://nfkcgifs.github.io/ytviewer.html">YouTube Viewer</a>
         <a href="https://nfkcgifs.github.io/OSZToMP3.html">OSZ to MP3</a>
         <a href="https://nfkcgifs.github.io/mp4viewer.html">MP4 Viewer</a>
         <a href="https://nfkcgifs.github.io/OSZToZIP.html">OSZ to ZIP</a>
@@ -234,8 +246,8 @@
     const toolsContent = document.getElementById('tools-content');
 
     toolsTitle.addEventListener('click', () => {
-      const isVisible = toolsContent.style.display === 'block';
-      toolsContent.style.display = isVisible ? 'none' : 'block';
+      const isVisible = toolsContent.style.display === 'grid';
+      toolsContent.style.display = isVisible ? 'none' : 'grid';
       toolsTitle.textContent = isVisible ? 'Tools ▼' : 'Tools ▲';
     });
   </script>
