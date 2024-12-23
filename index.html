@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NFKC's Website</title>
   <style>
-       /* Reset and base styles */
+    /* Reset and base styles */
 .dropdown {
   text-align: center;
   margin: 20px 0;
@@ -224,10 +224,6 @@
         font-size: 0.9em;
       }
     }
-
-    .star {
-      color: #FFD700;
-    }
   </style>
 </head>
 <body>
@@ -240,7 +236,7 @@
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#services">Fav/Best Friends</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contact">Tools</a></li>
         <li><a href="#musicplayer">Music</a></li>
       </ul>
     </nav>
@@ -248,24 +244,29 @@
 
   <section id="home" class="section">
     <h2>Welcome to my Website!</h2>
-    <p>this website is under heavy development so expect things to change! -[MOBILE NOT SUPPORTED AS OF RIGHT NOW.]-</p>
+    <p>This website is under heavy development so expect things to change!</p>
   </section>
 
   <section id="about" class="section">
     <h2>About Me!</h2>
-    <p>im a silly guy!</p>
+    <p>I'm a silly guy!</p>
   </section>
 
   <section id="services" class="section">
-    <h2>Favorite People / Best Friends</h2>
-    <ul>
-      <p>Hazel</p>
-      <p>Lethal/Mak (discord : "makkkkk_.")</p>
-      <p>iiDk</p>
-    </ul>
-  </section>
+  <div class="dropdown">
+    <h2 id="fav-people-title">Favorite People / Best Friends ▼</h2>
+    <div id="fav-people-content" class="dropdown-content">
+      <ul>
+        <p>Hazel</p>
+        <p>Lethal/Mak (discord : "makkkkk_.")</p>
+        <p>iiDk</p>
+      </ul>
+    </div>
+  </div>
+</section>
 
-<section id="contact" class="section">
+
+  <section id="contact" class="section">
     <div class="tools-dropdown">
       <h2 id="tools-title">Tools ▼</h2>
       <div id="tools-content" class="tools-dropdown-content">
@@ -277,46 +278,8 @@
       </div>
     </div>
   </section>
-<script>
-  const toolsToggle = document.getElementById('toolsToggle');
-  const toolsList = document.getElementById('toolsList');
-
-  toolsToggle.addEventListener('click', () => {
-    if (toolsList.style.display === 'none') {
-      toolsList.style.display = 'block';
-      toolsToggle.textContent = 'Hide Tools';
-    } else {
-      toolsList.style.display = 'none';
-      toolsToggle.textContent = 'Show Tools';
-    }
-  });
-</script>
-
-
 
   <section id="musicplayer" class="section">
-    <h2>Mini Music Player</h2>
-    <div class="music-player">
-      <audio id="audio-player">
-        <source id="audio-source" src="music/song1.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-      </audio>
-      <div class="controls">
-        <button id="prevBtn">Prev</button>
-        <button id="playBtn">Play</button>
-        <button id="nextBtn">Next</button>
-      </div>
-      <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
-      <ul id="playlist"></ul>
-    </div>
-    <div class="visualizer" id="visualizer">Loading...</div>
-  </section>
-
-  <footer>
-    <p>&copy; unfortunatly i cant make a website on my own so this website (and other website things) was made with ChatGPT and the rest by me.</p>
-  </footer>
-
- <section id="musicplayer" class="section">
     <h2>Mini Music Player</h2>
     <div class="music-player">
       <audio id="audio-player">
@@ -421,6 +384,104 @@ favPeopleTitle.addEventListener('click', () => {
   </script>
 </body>
 </html>
+
+
+  <section id="musicplayer" class="section">
+    <h2>Mini Music Player</h2>
+    <div class="music-player">
+      <audio id="audio-player">
+        <source id="audio-source" src="music/song1.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+      <div class="controls">
+        <button id="prevBtn">Prev</button>
+        <button id="playBtn">Play</button>
+        <button id="nextBtn">Next</button>
+      </div>
+      <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
+      <ul id="playlist"></ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; Made with ChatGPT and some help from me!</p>
+  </footer>
+
+  <script>
+    const toolsTitle = document.getElementById('tools-title');
+    const toolsContent = document.getElementById('tools-content');
+
+    toolsTitle.addEventListener('click', () => {
+      const isVisible = toolsContent.style.display === 'grid';
+      toolsContent.style.display = isVisible ? 'none' : 'grid';
+      toolsTitle.textContent = isVisible ? 'Tools ▼' : 'Tools ▲';
+    });
+    
+   favPeopleTitle.addEventListener('click', () => {
+      const isVisible = favPeopleContent.style.display === 'block';
+      favPeopleContent.style.display = isVisible ? 'none' : 'block';
+      favPeopleTitle.textContent = isVisible ? 'Favorite People / Best Friends ▼' : 'Favorite People / Best Friends ▲';
+    });
+
+    const songs = [
+      { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
+      { title: 'Magnolia - Playboy Carti', src: 'music/song2.mp3' },
+      { title: 'Toxic - d3r', src: 'music/song3.mp3' },
+      { title: 'P3T - femtanyl', src: 'music/song4.mp3' },
+      { title: 'Ice Ice Baby - Vanilla Ice', src: 'music/song5.mp3' }
+    ];
+
+  /*  let currentSongIndex = 0;
+    const audio = document.getElementById('audio-player');
+    const playBtn = document.getElementById('playBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const playlist = document.getElementById('playlist');
+    const volumeControl = document.getElementById('volumeControl');
+
+    function loadSong(index) {
+      currentSongIndex = index;
+      const song = songs[currentSongIndex];
+      audio.src = song.src;
+      audio.play();
+      playBtn.textContent = 'Pause';
+      updatePlaylist();
+    }
+
+    function updatePlaylist() {
+      playlist.innerHTML = songs.map((song, index) => `
+        <li class="${index === currentSongIndex ? 'active' : ''}" onclick="loadSong(${index})">
+          ${song.title}
+        </li>
+      `).join('');
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = 'Pause';
+      } else {
+        audio.pause();
+        playBtn.textContent = 'Play';
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+      loadSong(currentSongIndex);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentSongIndex = (currentSongIndex + 1) % songs.length;
+      loadSong(currentSongIndex);
+    });
+
+    volumeControl.addEventListener('input', (e) => {
+      audio.volume = e.target.value;
+    });
+
+    // Initial load
+    loadSong(currentSongIndex); */
   </script>
 </body>
 </html>
