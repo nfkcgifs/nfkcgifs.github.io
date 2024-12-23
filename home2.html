@@ -74,59 +74,43 @@
       margin: 0 auto 20px;
     }
 
-    .music-player {
-      background-color: #333333;
-      padding: 15px;
-      border-radius: 8px;
-      max-width: 90%;
-      margin: 0 auto;
+    .tools-dropdown {
       text-align: center;
-      color: white;
-      border: 2px solid #444444;
+      margin: 20px 0;
     }
 
-    .music-player .controls {
-      display: flex;
-      justify-content: space-around;
-      margin: 10px 0;
+    .tools-dropdown h2 {
+      cursor: pointer;
+      font-size: 1.5em;
+      color: #6a4c9c;
     }
 
-    .music-player button {
+    .tools-dropdown-content {
+      display: none;
+      margin-top: 15px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      padding: 10px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .tools-dropdown-content a {
+      display: block;
+      text-align: center;
       background-color: #6a4c9c;
-      border: none;
       color: white;
-      padding: 10px 20px;
-      margin: 5px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .music-player button:hover {
-      background-color: #4a3572;
-    }
-
-    #playlist {
-      list-style: none; /* Remove bullets */
-      padding: 0;
-      margin: 15px 0 0;
-    }
-
-    #playlist li {
-      cursor: pointer;
+      text-decoration: none;
       padding: 10px;
       border-radius: 5px;
-      color: white;
-      margin: 5px 0;
+      font-size: 0.9em;
+      font-weight: bold;
       transition: background-color 0.3s;
-      text-align: left;
     }
 
-    #playlist li:hover {
+    .tools-dropdown-content a:hover {
       background-color: #4a3572;
-    }
-
-    #playlist li.active {
-      background-color: #6a4c9c;
     }
 
     footer {
@@ -155,10 +139,6 @@
 
       .section p {
         font-size: 0.9em;
-      }
-
-      .music-player {
-        width: 100%;
       }
     }
   </style>
@@ -198,6 +178,19 @@
     </ul>
   </section>
 
+  <section id="contact" class="section">
+    <div class="tools-dropdown">
+      <h2 id="tools-title">Tools ▼</h2>
+      <div id="tools-content" class="tools-dropdown-content">
+        <a href="https://nfkcgifs.github.io/musicvisuals.html">Music Visuals</a>
+        <a href="https://nfkcgifs.github.io/ytviewer.html">YouTube Viewer</a>
+        <a href="https://nfkcgifs.github.io/OSZToMP3.html">OSZ to MP3</a>
+        <a href="https://nfkcgifs.github.io/mp4viewer.html">MP4 Viewer</a>
+        <a href="https://nfkcgifs.github.io/OSZToZIP.html">OSZ to ZIP</a>
+      </div>
+    </div>
+  </section>
+
   <section id="musicplayer" class="section">
     <h2>Mini Music Player</h2>
     <div class="music-player">
@@ -220,6 +213,15 @@
   </footer>
 
   <script>
+    const toolsTitle = document.getElementById('tools-title');
+    const toolsContent = document.getElementById('tools-content');
+
+    toolsTitle.addEventListener('click', () => {
+      const isVisible = toolsContent.style.display === 'grid';
+      toolsContent.style.display = isVisible ? 'none' : 'grid';
+      toolsTitle.textContent = isVisible ? 'Tools ▼' : 'Tools ▲';
+    });
+
     const songs = [
       { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
       { title: 'Magnolia - Playboy Carti', src: 'music/song2.mp3' },
