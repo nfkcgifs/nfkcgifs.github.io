@@ -162,6 +162,36 @@
     </nav>
   </header>
 
+  <section id="home" class="section">
+    <h2>Welcome to My Website!</h2>
+    <p>This is the place where I share all my cool projects and favorite things.</p>
+  </section>
+
+  <section id="about" class="section">
+    <h2>About Me</h2>
+    <p>Hi! I'm NFKC. I love creating, exploring, and sharing ideas. Welcome to my corner of the web!</p>
+  </section>
+
+  <section id="services" class="section">
+    <h2>Favorite/Best Friends</h2>
+    <p>Here are my amazing friends who make life better!</p>
+    <ul>
+      <li>Best Friend 1</li>
+      <li>Best Friend 2</li>
+      <li>Best Friend 3</li>
+    </ul>
+  </section>
+
+  <section id="contact" class="section">
+    <h2>Tools</h2>
+    <p>Explore tools and features I frequently use:</p>
+    <div class="tools">
+      <button>Tool 1</button>
+      <button>Tool 2</button>
+      <button>Tool 3</button>
+    </div>
+  </section>
+
   <section id="musicplayer" class="section">
     <h2>Mini Music Player</h2>
     <div class="music-player">
@@ -185,7 +215,6 @@
   </footer>
 
   <script>
-    // Your JavaScript code here
     const audio = document.getElementById('audio-player');
     const playBtn = document.getElementById('playBtn');
     const prevBtn = document.getElementById('prevBtn');
@@ -203,13 +232,59 @@
     ];
 
     let currentSongIndex = 0;
-    let isLooping = true;
 
-    // Functions for player functionality
-    function generatePlaylist() { /* Function content */ }
-    function playSong(index) { /* Function content */ }
-    function updateVisualizer() { /* Function content */ }
-    setInterval(updateVisualizer, 100);
+    function generatePlaylist() {
+      songs.forEach((song, index) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = song.title;
+        if (index === currentSongIndex) {
+          listItem.innerHTML += ' <span class="star">★</span>';
+        }
+        listItem.addEventListener('click', () => playSong(index));
+        playlistContainer.appendChild(listItem);
+      });
+    }
+
+    function playSong(index) {
+      currentSongIndex = index;
+      audio.src = songs[index].src;
+      audio.play();
+      playBtn.textContent = 'Pause';
+      updatePlaylist();
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = 'Pause';
+      } else {
+        audio.pause();
+        playBtn.textContent = 'Play';
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+      playSong(currentSongIndex);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentSongIndex = (currentSongIndex + 1) % songs.length;
+      playSong(currentSongIndex);
+    });
+
+    volumeControl.addEventListener('input', (e) => {
+      audio.volume = e.target.value;
+    });
+
+    function updatePlaylist() {
+      const items = playlistContainer.querySelectorAll('li');
+      items.forEach((item, index) => {
+        item.innerHTML = index === currentSongIndex
+          ? songs[index].title + ' <span class="star">★</span>'
+          : songs[index].title;
+      });
+    }
 
     generatePlaylist();
   </script>
