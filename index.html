@@ -316,65 +316,83 @@
     <p>&copy; unfortunatly i cant make a website on my own so this website (and other website things) was made with ChatGPT and the rest by me.</p>
   </footer>
 
+ <section id="musicplayer" class="section">
+    <h2>Mini Music Player</h2>
+    <div class="music-player">
+      <audio id="audio-player">
+        <source id="audio-source" src="music/song1.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+      <div class="controls">
+        <button id="prevBtn">Prev</button>
+        <button id="playBtn">Play</button>
+        <button id="nextBtn">Next</button>
+      </div>
+      <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
+      <ul id="playlist"></ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; Made with ChatGPT and some help from me!</p>
+  </footer>
+
   <script>
-    const audio = document.getElementById('audio-player');
-    const playBtn = document.getElementById('playBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const volumeControl = document.getElementById('volumeControl');
-    const playlistContainer = document.getElementById('playlist');
-    const visualizer = document.getElementById('visualizer');
+   const favPeopleTitle = document.getElementById('fav-people-title');
+const favPeopleContent = document.getElementById('fav-people-content');
+
+favPeopleTitle.addEventListener('click', () => {
+  const isVisible = favPeopleContent.style.display === 'block';
+  favPeopleContent.style.display = isVisible ? 'none' : 'block';
+  favPeopleTitle.textContent = isVisible 
+    ? 'Favorite People / Best Friends ▼' 
+    : 'Favorite People / Best Friends ▲';
+});
+ 
+   
+   const toolsTitle = document.getElementById('tools-title');
+    const toolsContent = document.getElementById('tools-content');
+
+    toolsTitle.addEventListener('click', () => {
+      const isVisible = toolsContent.style.display === 'grid';
+      toolsContent.style.display = isVisible ? 'none' : 'grid';
+      toolsTitle.textContent = isVisible ? 'Tools ▼' : 'Tools ▲';
+    });
 
     const songs = [
       { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
       { title: 'Magnolia - Playboy Carti', src: 'music/song2.mp3' },
-      { title: 'toxic - d3r', src: 'music/song3.mp3' },
+      { title: 'Toxic - d3r', src: 'music/song3.mp3' },
       { title: 'P3T - femtanyl', src: 'music/song4.mp3' },
-      { title: 'Ice Ice Baby - Vanilla Ice', src: 'music/song5.mp3' },
-      { title: 'Song 6', src: 'music/song6.mp3' },
-      { title: 'Song 7', src: 'music/song7.mp3' },
-      { title: 'Song 8', src: 'music/song8.mp3' },
+      { title: 'Ice Ice Baby - Vanilla Ice', src: 'music/song5.mp3' }
     ];
+
     let currentSongIndex = 0;
-    let isLooping = true;
+    const audio = document.getElementById('audio-player');
+    const playBtn = document.getElementById('playBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const playlist = document.getElementById('playlist');
+    const volumeControl = document.getElementById('volumeControl');
 
-    function generatePlaylist() {
-      songs.forEach((song, index) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = song.title;
-        if (index === currentSongIndex) {
-          listItem.innerHTML += ' <span class="star">★</span>';
-        }
-        listItem.addEventListener('click', () => playSong(index));
-        playlistContainer.appendChild(listItem);
-      });
-    }
-
-    function playSong(index) {
+    function loadSong(index) {
       currentSongIndex = index;
-      audio.src = songs[index].src;
+      const song = songs[currentSongIndex];
+      audio.src = song.src;
       audio.play();
       playBtn.textContent = 'Pause';
       updatePlaylist();
-      loadSongMetadata(songs[index].src);
-    }
-
-    function loadSongMetadata(songSrc) {
-      const songTitle = songSrc.split('/').pop().replace('.mp3', '');
-      visualizer.textContent = `Now Playing: ${songTitle}`;
     }
 
     function updatePlaylist() {
-      const items = playlistContainer.querySelectorAll('li');
-      items.forEach((item, index) => {
-        item.innerHTML = index === currentSongIndex
-          ? songs[index].title + ' <span class="star">★</span>'
-          : songs[index].title;
-      });
+      playlist.innerHTML = songs.map((song, index) => `
+        <li class="${index === currentSongIndex ? 'active' : ''}" onclick="loadSong(${index})">
+          ${song.title}
+        </li>
+      `).join('');
     }
 
-    playBtn.addEventListener('click', (event) => {
-      event.preventDefault(); // Prevent default behavior
+    playBtn.addEventListener('click', () => {
       if (audio.paused) {
         audio.play();
         playBtn.textContent = 'Pause';
@@ -386,37 +404,23 @@
 
     prevBtn.addEventListener('click', () => {
       currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-      playSong(currentSongIndex);
+      loadSong(currentSongIndex);
     });
 
     nextBtn.addEventListener('click', () => {
       currentSongIndex = (currentSongIndex + 1) % songs.length;
-      playSong(currentSongIndex);
+      loadSong(currentSongIndex);
     });
 
     volumeControl.addEventListener('input', (e) => {
       audio.volume = e.target.value;
     });
 
-    
-function updateVisualizer() {
-  const currentTime = audio.currentTime;
-  const duration = audio.duration;
-  const percentage = (currentTime / duration) * 100;
-  const bars = Math.floor(percentage / 10);
-  let visualText = '';
-
-  for (let i = 0; i < bars; i++) {
-    visualText += '<span style="color: #6a4c9c;">#</span>';
-  }
-  for (let i = bars; i < 10; i++) {
-    visualText += '<span style="color: gray;">#</span>';
-  }
-
-  visualizer.innerHTML = `|${visualText}| ${Math.floor(percentage)}%`;
-}
-setInterval(updateVisualizer, 100);
-
+    // Initial load
+    loadSong(currentSongIndex);
+  </script>
+</body>
+</html>
   </script>
 </body>
 </html>
