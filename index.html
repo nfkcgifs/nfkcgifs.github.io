@@ -211,9 +211,7 @@
       <p>my email which i use for nothing which i can check my emails from is "savmuncher88@gmail.com"</p>
   </section>
 
-  <!-- Music Player Section -->
   <section id="musicplayer" class="section">
-  <section class="section">
     <h2>Mini Music Player</h2>
     <div class="music-player">
       <audio id="audio-player">
@@ -235,7 +233,6 @@
   <footer>
     <p>&copy; unfortunatly i cant make a website on my own so this website was made with ChatGPT and the rest by me.</p>
   </footer>
-  </section>
 
   <script>
     const audio = document.getElementById('audio-player');
@@ -295,7 +292,8 @@
       });
     }
 
-    playBtn.addEventListener('click', () => {
+    playBtn.addEventListener('click', (event) => {
+      event.preventDefault(); // Prevent default behavior
       if (audio.paused) {
         audio.play();
         playBtn.textContent = 'Pause';
