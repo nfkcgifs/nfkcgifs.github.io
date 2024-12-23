@@ -74,6 +74,60 @@
       margin: 0 auto 20px;
     }
 
+    .music-player {
+      background-color: #333333;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+      border: 2px solid #444444;
+    }
+
+    .music-player .controls {
+      display: flex;
+      justify-content: space-around;
+      margin: 10px 0;
+    }
+
+    .music-player button {
+      background-color: #6a4c9c;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .music-player button:hover {
+      background-color: #4a3572;
+    }
+
+    .music-player ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .music-player ul li {
+      color: #f7f7f7;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .music-player ul li.active {
+      font-weight: bold;
+      color: #6a4c9c;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+      color: #999;
+      margin-top: 20px;
+    }
+
     .tools-dropdown {
       text-align: center;
       margin: 20px 0;
@@ -111,14 +165,6 @@
 
     .tools-dropdown-content a:hover {
       background-color: #4a3572;
-    }
-
-    footer {
-      text-align: center;
-      padding: 15px;
-      font-size: 0.9em;
-      color: #999;
-      margin-top: 20px;
     }
 
     @media (max-width: 768px) {
@@ -243,6 +289,7 @@
       const song = songs[currentSongIndex];
       audio.src = song.src;
       audio.play();
+      playBtn.textContent = 'Pause';
       updatePlaylist();
     }
 
