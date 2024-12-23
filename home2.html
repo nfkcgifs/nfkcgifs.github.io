@@ -216,6 +216,236 @@
   </section>
 
   <section id="services" class="section">
+    <div class="dropdown">
+      <h2 id="fav-people-title">Favorite People / Best Friends ▼</h2>
+      <div id="fav-people-content" class="dropdown-content">
+        <ul>
+          <li>Hazel</li>
+          <li>Lethal/Mak (discord : "makkkkk_.")</li>
+          <li>iiDk</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFKC's Website</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: #f7f7f7;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #6a4c9c;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      border-bottom: 3px solid #4a3572;
+    }
+
+    header .logo h1 {
+      font-size: 1.8em;
+      font-weight: 700;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+
+    nav ul li a:hover {
+      color: #d8b3e6;
+    }
+
+    .section {
+      padding: 40px 15px;
+      margin: 20px 0;
+      border-bottom: 2px solid #6a4c9c;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2em;
+      color: #6a4c9c;
+      margin-bottom: 15px;
+    }
+
+    .section p {
+      font-size: 1em;
+      color: #f7f7f7;
+      max-width: 90%;
+      margin: 0 auto 20px;
+    }
+
+    .music-player {
+      background-color: #333333;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+      border: 2px solid #444444;
+    }
+
+    .music-player .controls {
+      display: flex;
+      justify-content: space-around;
+      margin: 10px 0;
+    }
+
+    .music-player button {
+      background-color: #6a4c9c;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .music-player button:hover {
+      background-color: #4a3572;
+    }
+
+    .music-player ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .music-player ul li {
+      color: #f7f7f7;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .music-player ul li.active {
+      font-weight: bold;
+      color: #6a4c9c;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+      color: #999;
+      margin-top: 20px;
+    }
+
+    .tools-dropdown {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .tools-dropdown h2 {
+      cursor: pointer;
+      font-size: 1.5em;
+      color: #6a4c9c;
+    }
+
+    .tools-dropdown-content {
+      display: none;
+      margin-top: 15px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      padding: 10px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .tools-dropdown-content a {
+      display: block;
+      text-align: center;
+      background-color: #6a4c9c;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 0.9em;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .tools-dropdown-content a:hover {
+      background-color: #4a3572;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .section h2 {
+        font-size: 1.5em;
+      }
+
+      .section p {
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h1>NFKC's Website!</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Fav/Best Friends</a></li>
+        <li><a href="#contact">Tools</a></li>
+        <li><a href="#musicplayer">Music</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="home" class="section">
+    <h2>Welcome to my Website!</h2>
+    <p>This website is under heavy development so expect things to change!</p>
+  </section>
+
+  <section id="about" class="section">
+    <h2>About Me!</h2>
+    <p>I'm a silly guy!</p>
+  </section>
+
+  <section id="services" class="section">
     <h2>Favorite People / Best Friends</h2>
     <ul>
       <li>Hazel</li>
@@ -236,6 +466,101 @@
       </div>
     </div>
   </section>
+
+  <section id="musicplayer" class="section">
+    <h2>Mini Music Player</h2>
+    <div class="music-player">
+      <audio id="audio-player">
+        <source id="audio-source" src="music/song1.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+      </audio>
+      <div class="controls">
+        <button id="prevBtn">Prev</button>
+        <button id="playBtn">Play</button>
+        <button id="nextBtn">Next</button>
+      </div>
+      <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
+      <ul id="playlist"></ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; Made with ChatGPT and some help from me!</p>
+  </footer>
+
+  <script>
+    const toolsTitle = document.getElementById('tools-title');
+    const toolsContent = document.getElementById('tools-content');
+
+    toolsTitle.addEventListener('click', () => {
+      const isVisible = toolsContent.style.display === 'grid';
+      toolsContent.style.display = isVisible ? 'none' : 'grid';
+      toolsTitle.textContent = isVisible ? 'Tools ▼' : 'Tools ▲';
+    });
+
+    const songs = [
+      { title: 'Like Him - Tyler the Creator', src: 'music/song1.mp3' },
+      { title: 'Magnolia - Playboy Carti', src: 'music/song2.mp3' },
+      { title: 'Toxic - d3r', src: 'music/song3.mp3' },
+      { title: 'P3T - femtanyl', src: 'music/song4.mp3' },
+      { title: 'Ice Ice Baby - Vanilla Ice', src: 'music/song5.mp3' }
+    ];
+
+    let currentSongIndex = 0;
+    const audio = document.getElementById('audio-player');
+    const playBtn = document.getElementById('playBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const playlist = document.getElementById('playlist');
+    const volumeControl = document.getElementById('volumeControl');
+
+    function loadSong(index) {
+      currentSongIndex = index;
+      const song = songs[currentSongIndex];
+      audio.src = song.src;
+      audio.play();
+      playBtn.textContent = 'Pause';
+      updatePlaylist();
+    }
+
+    function updatePlaylist() {
+      playlist.innerHTML = songs.map((song, index) => `
+        <li class="${index === currentSongIndex ? 'active' : ''}" onclick="loadSong(${index})">
+          ${song.title}
+        </li>
+      `).join('');
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        playBtn.textContent = 'Pause';
+      } else {
+        audio.pause();
+        playBtn.textContent = 'Play';
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+      loadSong(currentSongIndex);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentSongIndex = (currentSongIndex + 1) % songs.length;
+      loadSong(currentSongIndex);
+    });
+
+    volumeControl.addEventListener('input', (e) => {
+      audio.volume = e.target.value;
+    });
+
+    // Initial load
+    loadSong(currentSongIndex);
+  </script>
+</body>
+</html>
+
 
   <section id="musicplayer" class="section">
     <h2>Mini Music Player</h2>
